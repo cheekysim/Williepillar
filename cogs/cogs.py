@@ -20,7 +20,7 @@ class Cogs(commands.Cog):
     @slash_command(name="list_cogs", description="List all active and deactive cogs", guild_ids=[703637471212077096])
     async def list_cogs(self, ctx):
         c = []
-        for file in os.listdir("Williepillar/cogs"):
+        for file in os.listdir("cogs"):
             if file.endswith(".py"):
                 c.append(file[:-3])
         await ctx.send("All Cogs:\n" + '\n'.join(c))
