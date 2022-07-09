@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from discord_slash import cog_ext
 import json
 import os
 
@@ -12,7 +11,7 @@ class General(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @cog_ext.cog_slash(name="Server", description="Shows details about the server", guild_ids=guild_ids)
+    @commands.command(name="Server", description="Shows details about the server", guild_ids=guild_ids)
     async def server(self, ctx):
         s = ctx.guild
         embed=discord.Embed(title="Server Information:", description="", color=0x6600ff)

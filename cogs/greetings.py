@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from discord_slash import cog_ext
 import json
 import os
 
@@ -18,11 +17,11 @@ class Greetings(commands.Cog):
         if channel is not None:
             await channel.send(f"Welcome {member.mention}!")
 
-    @cog_ext.cog_slash(name="Hello", description="Says Hello", guild_ids=guild_ids)
+    @commands.command(name="Hello", description="Says Hello", guild_ids=guild_ids)
     async def hello(self, ctx):
         await ctx.send(f"Hello {ctx.author.name}!")
 
-    @cog_ext.cog_slash(name="Goodbye", description="Says Goodbye", guild_ids=guild_ids)
+    @commands.command(name="Goodbye", description="Says Goodbye", guild_ids=guild_ids)
     async def goodbye(self, ctx):
         await ctx.send(f"Goodbye {ctx.author.name}!")
 

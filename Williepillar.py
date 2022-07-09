@@ -1,11 +1,9 @@
 import discord
 from discord.ext import commands
-from discord_slash import SlashCommand
 import json
 import os
 
 bot = commands.Bot(command_prefix="w/")
-slash = SlashCommand(bot, sync_commands=True)
 
 with open('Williepillar/config.json', 'r') as f:
     data = json.load(f)
