@@ -3,6 +3,7 @@ from discord.ext import commands
 import json
 import os
 
+# testing
 
 bot = commands.Bot(command_prefix="w/")
 
