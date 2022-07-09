@@ -1,9 +1,10 @@
 import discord
 from discord.ext import commands
+from discord.commands import slash_command
 import json
 import os
 
-with open('Williepillar/config.json') as f:
+with open('config.json') as f:
     data = json.load(f)
     guild_ids = data["guilds"]
 
@@ -17,11 +18,11 @@ class Greetings(commands.Cog):
         if channel is not None:
             await channel.send(f"Welcome {member.mention}!")
 
-    @commands.command(name="Hello", description="Says Hello", guild_ids=guild_ids)
+    @slash_command(name="hello", description="Says Hello", guild_ids=guild_ids)
     async def hello(self, ctx):
         await ctx.send(f"Hello {ctx.author.name}!")
 
-    @commands.command(name="Goodbye", description="Says Goodbye", guild_ids=guild_ids)
+    @slash_command(name="goodbye", description="Says Goodbye", guild_ids=guild_ids)
     async def goodbye(self, ctx):
         await ctx.send(f"Goodbye {ctx.author.name}!")
 

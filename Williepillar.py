@@ -8,7 +8,7 @@ with open('config.json') as f:
     guilds = data["guilds"]
 
 
-bot = commands.Bot(debug_guilds=[guilds])
+bot = commands.Bot()
 
 with open('config.json', 'r') as f:
     data = json.load(f)

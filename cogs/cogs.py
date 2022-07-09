@@ -1,9 +1,10 @@
 import discord
 from discord.ext import commands
+from discord.commands import slash_command
 import json
 import os
 
-with open('Williepillar/config.json') as f:
+with open('config.json') as f:
     data = json.load(f)
     guild_ids = data["guilds"]
 
