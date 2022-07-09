@@ -17,7 +17,7 @@ class Cogs(commands.Cog):
         self.bot.reload_extension(f"cogs.{cog}")
         await ctx.send(f"Reloaded {cog}")
 
-    @slash_command(name="list_Cogs", description="List all active and deactive cogs", guild_ids=[703637471212077096])
+    @slash_command(name="list_cogs", description="List all active and deactive cogs", guild_ids=[703637471212077096])
     async def list_cogs(self, ctx):
         c = []
         for file in os.listdir("Williepillar/cogs"):
