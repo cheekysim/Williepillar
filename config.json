@@ -1,13 +1,12 @@
 {
-  "token": "ODg5MzAxNDIwOTg0MTI3NDg5.YUfQfQ.7ok-MLsQny_QIJM7R0H9MNIXLOk",
   "guilds": [
     703637471212077096
   ],
   "cogs": [
     {
-      "general": "active",
-      "greetings": "active",
-      "cogs": "active"
+      "general": "working",
+      "greetings": "working",
+      "cogs": "working"
     }
   ]
 }

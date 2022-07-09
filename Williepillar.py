@@ -3,34 +3,35 @@ from discord.ext import commands
 import json
 import os
 
+
 bot = commands.Bot(command_prefix="w/")
 
-with open('Williepillar/config.json', 'r') as f:
+with open('config.json', 'r') as f:
     data = json.load(f)
-    for file in os.listdir("Williepillar/cogs"):
+    for file in os.listdir("cogs"):
         if file.endswith(".py"):
             try:
                 bot.load_extension(f"cogs.{file[:-3]}")
-                data["cogs"][0][file[:-3]] = "active"
+                data["cogs"][0][file[:-3]] = "working"
                 print(f"Loaded {file[:-3]}")
             except Exception as e:
                 print(e)
-                data["cogs"][0][file[:-3]] = "deactive"
+                data["cogs"][0][file[:-3]] = "broken"
                 print(f"Failed to Load {file[:-3]}")
         else:
             continue
-    with open('Williepillar/config.json', 'w') as f:
+    with open('config.json', 'w') as f:
         json.dump(data, f, indent=2)
 
-with open('Williepillar/config.json') as f:
+with open('token.json') as f:
     data = json.load(f)
     token = data["token"]
-    guild_ids = data["guilds"]
     print("Loaded Token")
 
 @bot.event
 async def on_ready():
     print("Williepillar Online")
     await bot.change_presence(activity=discord.Game(name="Nothing"))
+
 
 bot.run(token)
