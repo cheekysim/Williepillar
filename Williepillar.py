@@ -3,9 +3,12 @@ from discord.ext import commands
 import json
 import os
 
-# testing
+with open('config.json') as f:
+    data = json.load(f)
+    guilds = data["guilds"]
 
-bot = commands.Bot(command_prefix="w/")
+
+bot = commands.Bot(debug_guilds=[guilds])
 
 with open('config.json', 'r') as f:
     data = json.load(f)
