@@ -12,12 +12,12 @@ class Cogs(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="Reload", description="Reload a specified cog", guild_ids=guild_ids)
+    @slash_command(name="reload", description="Reload a specified cog", guild_ids=[703637471212077096])
     async def reload(self, ctx, cog):
         self.bot.reload_extension(f"cogs.{cog}")
         await ctx.send(f"Reloaded {cog}")
 
-    @commands.command(name="List_Cogs", description="List all active and deactive cogs", guild_ids=guild_ids)
+    @slash_command(name="list_Cogs", description="List all active and deactive cogs", guild_ids=[703637471212077096])
     async def list_cogs(self, ctx):
         c = []
         for file in os.listdir("Williepillar/cogs"):

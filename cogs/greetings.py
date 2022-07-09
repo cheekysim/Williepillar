@@ -18,11 +18,11 @@ class Greetings(commands.Cog):
         if channel is not None:
             await channel.send(f"Welcome {member.mention}!")
 
-    @slash_command(name="hello", description="Says Hello", guild_ids=guild_ids)
+    @slash_command(name="hello", description="Says Hello", guild_ids=[703637471212077096])
     async def hello(self, ctx):
         await ctx.send(f"Hello {ctx.author.name}!")
 
-    @slash_command(name="goodbye", description="Says Goodbye", guild_ids=guild_ids)
+    @slash_command(name="goodbye", description="Says Goodbye", guild_ids=[703637471212077096])
     async def goodbye(self, ctx):
         await ctx.send(f"Goodbye {ctx.author.name}!")
 
