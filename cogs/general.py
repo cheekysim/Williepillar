@@ -1,7 +1,6 @@
-from optparse import Option
 import discord
 from discord.ext import commands
-from discord.commands import slash_command
+from discord.commands import slash_command, Option
 import json
 
 with open('config.json') as f:
@@ -30,6 +29,7 @@ class General(commands.Cog):
 
     @slash_command(name="id", description="Get id of user", guild_ids=[703637471212077096])
     async def id(self, ctx, user: Option(discord.User, "User", required=False)):
+        user = user or ctx.author
         await ctx.respond(f"The ID of {user} is {user.id}")
 
 def setup(bot):
