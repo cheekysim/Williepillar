@@ -15,7 +15,7 @@ class Cogs(commands.Cog):
     @slash_command(name="reload", description="Reload a specified cog", guild_ids=[703637471212077096])
     async def reload(self, ctx, cog):
         self.bot.reload_extension(f"cogs.{cog}")
-        await ctx.send(f"Reloaded {cog}")
+        await ctx.respond(f"Reloaded {cog}")
 
     @slash_command(name="list_cogs", description="List all active and deactive cogs", guild_ids=[703637471212077096])
     async def list_cogs(self, ctx):
@@ -23,7 +23,7 @@ class Cogs(commands.Cog):
         for file in os.listdir("cogs"):
             if file.endswith(".py"):
                 c.append(file[:-3])
-        await ctx.send("All Cogs:\n" + '\n'.join(c))
+        await ctx.respond("All Cogs:\n" + '\n'.join(c))
 
 def setup(bot):
     bot.add_cog(Cogs(bot))

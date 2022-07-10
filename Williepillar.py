@@ -5,7 +5,7 @@ import os
 
 # testing
 
-bot = commands.Bot(command_prefix="w/")
+bot = commands.Bot()
 
 with open('config.json', 'r') as f:
     data = json.load(f)

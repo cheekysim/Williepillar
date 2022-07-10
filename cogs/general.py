@@ -1,3 +1,4 @@
+from optparse import Option
 import discord
 from discord.ext import commands
 from discord.commands import slash_command
@@ -21,11 +22,15 @@ class General(commands.Cog):
         embed.add_field(name="Created", value=s.created_at, inline=True)
         embed.add_field(name="Created", value=s.created_at, inline=True)
         embed.set_footer(text=f"{self.bot.user.name} | Requested By: {ctx.author.mention}")
-        await ctx.send(embed=embed)
+        await ctx.respond(embed=embed)
 
     @slash_command(name="ping", description="Shows Ping", guild_ids=[703637471212077096])
     async def ping(self, ctx):
-         await ctx.send(f"Ping is currently: {round(self.bot.latency * 1000)}ms")
+         await ctx.respond(f"Ping is currently: {round(self.bot.latency * 1000)}ms")
+
+    @slash_command(name="id", description="Get id of user", guild_ids=[703637471212077096])
+    async def id(self, ctx, user: Option(discord.User, "User", required=False)):
+        await ctx.respond(f"The ID of {user} is {user.id}")
 
 def setup(bot):
     bot.add_cog(General(bot))
