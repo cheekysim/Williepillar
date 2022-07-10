@@ -24,5 +24,10 @@ class General(commands.Cog):
         embed.set_footer(text=f"{self.bot.user.name} | Requested By: {ctx.author.mention}")
         await ctx.send(embed=embed)
 
+    @slash_command(name="ping", description="Shows Ping", guild_ids=[703637471212077096])
+    async def ping(self, bot):
+         await bot.send(f"Your Ping is:{round(bot.latency * 1)}ms")
+
+
 def setup(bot):
     bot.add_cog(General(bot))
