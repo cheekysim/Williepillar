@@ -27,9 +27,5 @@ class General(commands.Cog):
     async def ping(self, ctx):
          await ctx.send(f"Ping is currently: {round(self.bot.latency * 1000)}ms")
 
-
-# Hello devil
-
-
 def setup(bot):
     bot.add_cog(General(bot))
