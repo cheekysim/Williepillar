@@ -1,8 +1,11 @@
 import discord
 from discord.ext import commands
 from discord.commands import slash_command, Option
-from modules.embed import embed
 import json
+
+import os, sys, inspect
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
+from modules.embed import embed
 
 with open('config.json') as f:
     data = json.load(f)
