@@ -6,7 +6,8 @@
     {
       "general": "working",
       "greetings": "working",
-      "cogs": "working"
+      "cogs": "working",
+      "test": "working"
     }
   ]
 }

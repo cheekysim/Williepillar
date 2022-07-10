@@ -3,8 +3,6 @@ from discord.ext import commands
 import json
 import os
 
-# testing
-
 bot = commands.Bot()
 
 with open('config.json', 'r') as f:

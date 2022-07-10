@@ -1,3 +1,4 @@
+from random import choices
 import discord
 from discord.ext import commands
 from discord.commands import slash_command, Option
@@ -8,12 +9,17 @@ with open('config.json') as f:
     data = json.load(f)
     guild_ids = data["guilds"]
 
+cogs = []
+for file in os.listdir("cogs"):
+        if file.endswith(".py"):
+            cogs.append(file[:-3])
+
 class Cogs(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
+    
     @slash_command(name="reload", description="Reload a specified cog", guild_ids=[703637471212077096])
-    async def reload(self, ctx, cog):
+    async def reload(self, ctx, cog: Option(input_type=str, choices=cogs, required=True)):
         self.bot.reload_extension(f"cogs.{cog}")
         await ctx.respond(f"Reloaded {cog}")
 
