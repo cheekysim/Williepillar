@@ -1,4 +1,3 @@
-from email.policy import default
 import discord
 
 def embed(**kwargs):
@@ -7,11 +6,10 @@ def embed(**kwargs):
     embed.title = kwargs.get("title", embed.Empty)
     embed.description = kwargs.get("description", embed.Empty)
     embed.url = kwargs.get("url", embed.Empty)
-    embed.color = kwargs.get("color", embed.Empty)
-    print(kwargs.get("thumbnail", embed.Empty))
+    embed.color = kwargs.get("color", 0x6600ff)
     embed.set_thumbnail(url=(kwargs.get("thumbnail", embed.Empty)))
+    embed.set_image(url=(kwargs.get("image", embed.Empty)))
     for field in kwargs.get("author", []):
-        print(field)
         try:
             embed.set_author(name=field['name'], url=field['url'], icon=field['icon'])
         except:
@@ -24,14 +22,12 @@ def embed(**kwargs):
                     embed.set_author(name=field['name'], url=field['url'])
 
     for field in kwargs.get("fields", []):
-        print(field)
         try:
             embed.add_field(name=field['name'], value=field['value'], inline=field['inline'])
         except:
             embed.add_field(name=field['name'], value=field['value'], inline=False)
 
     for field in kwargs.get("footer", []):
-        print(field)
         try:
             embed.set_footer(text=field['text'], icon_url=field['icon'])
         except:
