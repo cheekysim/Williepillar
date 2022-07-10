@@ -28,5 +28,6 @@ class General(commands.Cog):
          await ctx.send(f"Your Ping is:{round(self.bot.latency * 1000)}ms")
 
 
+
 def setup(bot):
     bot.add_cog(General(bot))
