@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 from discord.commands import slash_command
 import json
-import os
 
 with open('config.json') as f:
     data = json.load(f)
