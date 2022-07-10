@@ -8,7 +8,8 @@ def embed(**kwargs):
     embed.description = kwargs.get("description", embed.Empty)
     embed.url = kwargs.get("url", embed.Empty)
     embed.color = kwargs.get("color", embed.Empty)
-
+    print(kwargs.get("thumbnail", embed.Empty))
+    embed.set_thumbnail(url=(kwargs.get("thumbnail", embed.Empty)))
     for field in kwargs.get("author", []):
         print(field)
         try:
