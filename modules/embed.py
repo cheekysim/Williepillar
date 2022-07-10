@@ -32,5 +32,5 @@ def embed(**kwargs):
             embed.set_footer(text=field['text'], icon_url=field['icon'])
         except:
             embed.set_footer(text=field['text'])
-
+            
     return embed
