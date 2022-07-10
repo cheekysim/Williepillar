@@ -1,4 +1,10 @@
 import asyncio
+from asyncio.proactor_events import _ProactorDuplexPipeTransport
+from asyncore import poll
+from pydoc import describe
+from sre_constants import SUCCESS
+from tabnanny import check
+from charset_normalizer import set_logging_handler
 import discord
 from discord.ext import commands
 from discord.commands import slash_command, Option
@@ -6,6 +12,7 @@ import asyncio
 import json
 import youtube_dl
 import pafy
+import ffmpeg
 
 
 
@@ -31,7 +38,6 @@ class Music(commands.Cog):
 
     async def check_queue(self, ctx):
         if len(self.song_queue[ctx.guild.id]) > 0:
-            ctx.voice_client.stop()
             await self.play_song(ctx, self.song_queue[ctx.guild_id][0])
             self.song_queue[ctx.guild_id].pop(0)
 
@@ -70,7 +76,8 @@ class Music(commands.Cog):
                 return await ctx.respond("Sorry, I did not find any results.")
             song = result[0]
         if ctx.voice_client.source is not None:
-            if queue_len == len(self.song_queue[ctx.guild_id]):
+            queue_len = len(self.song_queue[ctx.guild_id])
+            if queue_len < 10:
                 return await ctx.respond(f"Added to queue position {queue_len+1}")
             else:
                 return await ctx.respond("Can only queue up to 10 songs, please wait untill the current song is finished")
@@ -89,7 +96,64 @@ class Music(commands.Cog):
             embed.description += f"[{entry['title']}]({entry['webpage_url']})\n"
             amount +=1
         embed.set_footer(text=f"Displaying the first {amount} results")
-        await ctx.respond(embed=embed)    
+        await ctx.respond(embed=embed)
+
+        @slash_command(name="queue", description="queues song", guild_ids=[703637471212077096])
+        async def search(self,ctx):
+            if len(self.song_queue[ctx.guild_id]) == 0:
+                return await ctx.respond("There are no songs in the queue")
+            
+            embed = discord.Embed(title="Song Queue",descrption="",colour=discord.Colour.purple())
+            i = 1
+            for url in self.song_queue[ctx.guild.id]:
+                embed.description += f"{i}) {url}\n"
+                i += 1
+            await ctx.respond(embed=embed)
+
+        @slash_command(name="skip", description="skips song", guild_ids=[703637471212077096])
+        async def skip(self,ctx):
+            if ctx.voice_client is None:
+                return await ctx.respond("No song is being played")
+            if ctx.author.voice is None:
+                return await ctx.respond("You must be in a voice channel to use this command")
+            if ctx.author.voice.channel.id != ctx.voice_client.channel.id:
+                return await ctx.respond("You must be in the same voice channel as the bot to use this command")
+            
+            poll = discord.Embed(title=f"Vote To Skip Song", description="**80% of of the voice channel must vote to skip", colour=discord.Colour.purple())
+            poll.add_feild(name="Skip", value=":white_check_mark:")
+            poll.add_feild(name="Stay", value=":no_entry_sign:")
+            poll.set_footer(text="Vote ends in 15 seconds")
+            poll_msg = await ctx.respond(embed=poll)
+            poll_id = poll_msg.id
+            await poll.msg.add_reaction(u"\u2705")
+            await poll.msg.add_reaction(u"\U0001F6AB")
+            await asyncio.sleep(15)
+            poll_msg = await ctx.channel.fetch_message(poll_id)
+
+            votes = {u"\u2705": 0, u"\U0001F6AB": 0}
+            reacted = []
+            for reaction in poll_msg.reactions:
+                if reaction.emoji in [u"\u2705",u"\U0001F6AB"]:
+                    async for user in reaction.users():
+                        if user.voice.channel.id == ctx.voice_client.channel.id and user.id not in reacted and not user.bot:
+                            votes[reaction.emoji] +=1 
+                            reacted.append(user.id)
+            skip = False
+            if votes[u"\u2705"] > 0:
+                if votes[u"\U0001F6AB"] == 0 or votes[u"\u2705"] / (votes[u"\u2705"] + votes[u"\U0001F6AB"]) > 0.79:
+                    skip = True
+                    embed = discord.Embed(title="Skip Successful", descrption="***Voting to skip the song was successful, skipping***", colour=discord.Colour.purple())
+            
+            if not skip:
+                embed = discord.Embed(title="Skip Failed", descrption="***Voting to skip the song was unsuccessful***", colour=discord.Colour.purple())
+            embed.set_footer(text="Voting Ended")
+            await poll_msg.clear_reactions()
+            await poll_msg.edit(embed=embed)
+            if skip:
+                ctx.voice_client.stop()
+
+
 
 def setup(bot):
     bot.add_cog(Music(bot))
+
