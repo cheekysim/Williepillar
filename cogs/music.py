@@ -9,6 +9,7 @@ import pafy
 
 
 
+
 with open('config.json') as f:
     data = json.load(f)
     guild_ids = data["guilds"]
@@ -62,14 +63,14 @@ class Music(commands.Cog):
             return await ctx.respond("Please include a song")
         if ctx.voice_client is None:
             return await ctx.respond("I require to be in a voice channel to play a song")
-        if not ("youtube.com/watch?" in song or "https://youru.be/" in song):
+        if not ("youtube.com/watch?" in song or "https://youtu.be/" in song):
             await ctx.respond("Searching for the song, this might take a few seconds")
             result = await self.search_song(1, song, get_url=True)
             if result is None:
                 return await ctx.respond("Sorry, I did not find any results.")
             song = result[0]
         if ctx.voice_client.source is not None:
-            if queue_len = len(self.song_queue[ctx.guild_id])
+            if queue_len == len(self.song_queue[ctx.guild_id]):
                 return await ctx.respond(f"Added to queue position {queue_len+1}")
             else:
                 return await ctx.respond("Can only queue up to 10 songs, please wait untill the current song is finished")
