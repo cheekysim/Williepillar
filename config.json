@@ -7,7 +7,8 @@
       "general": "working",
       "greetings": "working",
       "cogs": "working",
-      "test": "working"
+      "test": "working",
+      "music": "working"
     }
   ]
 }

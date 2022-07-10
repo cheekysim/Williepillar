@@ -17,7 +17,7 @@ class General(commands.Cog):
     async def server(self, ctx):
         s = ctx.guild
         date = s.created_at
-        await ctx.respond(embed=embed(title="Server Information:", color=0x6600ff, author=[{'name':s.name}], fields=[{'name':'Server Owner','value':s.owner,'inline':True}, {'name':'Created','value':f'{date.day}/{date.month}/{date.year} {date.hour}:{date.minute}:{date.second}','inline':True}], footer=[{'text':f'{self.bot.user.name} | Requested By: {ctx.author.name}'}]))
+        await ctx.respond(embed=embed(title="Server Information:", color=0x6600ff, thumbnail='https://cdn.discordapp.com/icons/703637471212077096/fe0f92b69284f4c3aa0552301e58e920.png?size=1024', author=[{'name':s.name}], fields=[{'name':'Server Owner','value':s.owner,'inline':True}, {'name':'Created','value':f'{date.day}/{date.month}/{date.year} {date.hour}:{date.minute}:{date.second}','inline':True}], footer=[{'text':f'{self.bot.user.name} | Requested By: {ctx.author.name}'}]))
 
     @slash_command(name="ping", description="Shows Ping", guild_ids=[703637471212077096])
     async def ping(self, ctx):
