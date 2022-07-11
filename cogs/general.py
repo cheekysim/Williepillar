@@ -9,6 +9,7 @@ from modules.embed import embed
 with open('config.json') as f:
     data = json.load(f)
     guild_ids = data["guilds"]
+    print("guild_ids")
 
 class General(commands.Cog):
     def __init__(self, bot):
