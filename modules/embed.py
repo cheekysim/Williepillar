@@ -1,6 +1,6 @@
 import discord
 
-def embed(**kwargs):
+def embed(self, ctx, **kwargs):
     embed=discord.Embed()
     embed.type = kwargs.get("type", embed.Empty)
     embed.title = kwargs.get("title", embed.Empty)
@@ -27,7 +27,7 @@ def embed(**kwargs):
         except:
             embed.add_field(name=field['name'], value=field['value'], inline=False)
 
-    for field in kwargs.get("footer", []):
+    for field in kwargs.get("footer", [{'text':f'{self.bot.user.name} | Requested By: {ctx.author.name}'}]):
         try:
             embed.set_footer(text=field['text'], icon_url=field['icon'])
         except:
