@@ -6,13 +6,18 @@ from discord.ui import Button, View
 import os, sys, inspect
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 from modules.embed import embed
+<<<<<<< HEAD
 from modules.button import abutton
+=======
+
+>>>>>>> 575d772d90c4021966479467a8944ffc665205b0
 
 with open('config.json') as f:
     data = json.load(f)
     guilds = data["guilds"]
 
-class General(commands.Cog):
+
+class General(commands.Cog,View):
     def __init__(self, bot):
         self.bot = bot
 
@@ -44,6 +49,7 @@ class General(commands.Cog):
     @slash_command(name="image", guild_ids=[703637471212077096])
     async def image(self, ctx):
         await ctx.respond(embed=embed(self, ctx, type="image",url=ctx.guild.icon))
+<<<<<<< HEAD
     
     @slash_command(name="button", guild_ids=[703637471212077096])
     async def button(self,ctx):
@@ -60,6 +66,8 @@ class General(commands.Cog):
         view.add_item(abutton(self, ctx, label="check", response="send_message('It Works!')"))
         #view.add_item(button2)
         await ctx.respond(view = view)
+=======
+>>>>>>> 575d772d90c4021966479467a8944ffc665205b0
 
 def setup(bot):
     bot.add_cog(General(bot))
