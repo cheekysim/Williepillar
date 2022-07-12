@@ -20,7 +20,7 @@ class General(commands.Cog):
     async def server(self, ctx):
         s = ctx.guild
         date = s.created_at
-        await ctx.respond(embed=embed(self, ctx, title="Server Information:", color=0x6600ff, thumbnail=s.icon, author=[{'name':s.name,'icon':s.icon}], fields=[
+        await ctx.respond(embed=embed(self, ctx, title="Server Information:", thumbnail=s.icon, author=[{'name':s.name,'icon':s.icon}], fields=[
             {'name':'ID','value':s.id,'inline':True},
             {'name':'Server Owner','value':s.owner,'inline':True}, 
             {'name':'Description','value':s.description,'inline':True},
