@@ -6,7 +6,7 @@ from discord.ui import Button, View
 import os, sys, inspect
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 from modules.embed import embed
-from modules.button import AButton
+from modules.button import abutton
 
 with open('config.json') as f:
     data = json.load(f)
@@ -22,7 +22,7 @@ class General(commands.Cog):
         date = s.created_at
         await ctx.respond(embed=embed(self, ctx, title="Server Information:", thumbnail=s.icon, author=[{'name':s.name,'icon':s.icon}], fields=[
             {'name':'ID','value':s.id,'inline':True},
-            {'name':'Server Owner','value':s.owner,'inline':True}, 
+            {'name':'Server Owner','value':s.owner,'inline':True},
             {'name':'Description','value':s.description,'inline':True},
             {'name':'Channels','value':'todo','inline':True},
             {'name':'Members','value':s.member_count,'inline':True},
@@ -48,15 +48,18 @@ class General(commands.Cog):
     @slash_command(name="button", guild_ids=[703637471212077096])
     async def button(self,ctx):
         button = Button(label="Check",style=discord.ButtonStyle.red)
-        button2 = Button(label="Youtube",url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-        async def button_callback(interaction):
-            await interaction.response.send_message("it works :V")
-        button.callback = button_callback
+        #button2 = Button(label="Youtube",url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+        #async def button_callback(interaction):
+        #    await interaction.response.send_message("it works :V")
+        #button.callback = button_callback
+        #view = View()
+        #view.add_item(button)
+        #view.add_item(button2)
+        #Button
         view = View()
-        view.add_item(button)
-        view.add_item(button2)
+        view.add_item(abutton(self, ctx, label="check", response="send_message('It Works!')"))
+        #view.add_item(button2)
         await ctx.respond(view = view)
-
 
 def setup(bot):
     bot.add_cog(General(bot))
