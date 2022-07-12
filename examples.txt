@@ -1,0 +1,19 @@
+
+single buttons
+--------------------
+button = Button(label="insert label here",style=discord.ButtonStyle.green)
+        async def button_callback(self,button, interaction):
+            await interaction.response.send_message("insert text here")
+        button.callback = button_callback
+        view = MyView()
+        view.add_item(button)
+
+multiple buttons
+--------------------
+class MyView(View):
+    @discord.ui.button(label="insert label here", style=discord.ButtonStyle.green)
+    async def button_callback2(self,button, interaction):
+        await interaction.response.send_message("insert text here")
+
+
+

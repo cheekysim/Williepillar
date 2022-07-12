@@ -12,19 +12,6 @@ with open('config.json') as f:
     data = json.load(f)
     guilds = data["guilds"]
 
-class MyView(View):
-    @discord.ui.button(label="Check", style=discord.ButtonStyle.red)
-    async def button_callback(self,button, interaction):
-        button.label = "it works"
-        button.disabled
-        await interaction.response.send_message("it works")
-    @discord.ui.button(label="Check2", style=discord.ButtonStyle.blurple)
-    async def button_callback2(self,button, interaction):
-        await interaction.response.send_message("it works2")
-    @discord.ui.button(label="Hi", style=discord.ButtonStyle.blurple)
-    async def button_callback2(self,button, interaction):
-        await interaction.response.send_message("Hi cheeky")
-
 
 class General(commands.Cog,View):
     def __init__(self, bot):
@@ -58,18 +45,6 @@ class General(commands.Cog,View):
     @slash_command(name="image", guild_ids=[703637471212077096])
     async def image(self, ctx):
         await ctx.respond(embed=embed(self, ctx, type="image",url=ctx.guild.icon))
-        
-    @slash_command(name="button", guild_ids=[703637471212077096])
-    async def button(self,ctx):
-        button = Button(label="Youtube",url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-        button1 = Button(label="Hi",style=discord.ButtonStyle.blurple)
-        async def button_callback(self,button, interaction):
-            await interaction.response.send_message("Hi cheeky")
-        button.callback = button_callback
-        view = MyView()
-        view.add_item(button1)
-        view.add_item(button)
-        await ctx.respond(view = view)
 
 
 def setup(bot):
