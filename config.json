@@ -8,7 +8,10 @@
       "greetings": "working",
       "cogs": "working",
       "test": "working",
-      "music": "working"
+      "music": "working",
+      "games": "working",
+      "tic tac toe": "working",
+      "tictactoe": "working"
     }
   ]
 }

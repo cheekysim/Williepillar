@@ -46,11 +46,6 @@ class General(commands.Cog,View):
     @slash_command(name="image", guild_ids=[703637471212077096])
     async def image(self, ctx):
         await ctx.respond(embed=embed(self, ctx, type="image",url=ctx.guild.icon))
-    
-    @slash_command(name="8ball",description="A game of 8ball", guild_ids=[703637471212077096])
-    async def ball(self, ctx, question):
-        rnd = random.choice(["yes","no","maybe","probably"])
-        await ctx.respond(embed=embed(self, ctx, title=f"**A: {rnd}**",description=f"**Q: {question}**"))
 
 
 def setup(bot):
