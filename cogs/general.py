@@ -3,6 +3,7 @@ from discord.ext import commands
 from discord.commands import slash_command, Option
 import json
 from discord.ui import Button, View
+import random
 import os, sys, inspect
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 from modules.embed import embed
@@ -45,6 +46,11 @@ class General(commands.Cog,View):
     @slash_command(name="image", guild_ids=[703637471212077096])
     async def image(self, ctx):
         await ctx.respond(embed=embed(self, ctx, type="image",url=ctx.guild.icon))
+    
+    @slash_command(name="8ball",description="A game of 8ball", guild_ids=[703637471212077096])
+    async def ball(self, ctx, question):
+        rnd = random.choice(["yes","no","maybe","probably"])
+        await ctx.respond(embed=embed(self, ctx, title=f"**A: {rnd}**",description=f"**Q: {question}**"))
 
 
 def setup(bot):
