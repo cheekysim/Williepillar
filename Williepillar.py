@@ -3,7 +3,10 @@ from discord.ext import commands
 import json
 import os
 
-bot = commands.Bot()
+intents = discord.Intents.default()
+intents.members = True
+
+bot = commands.Bot(intents=intents)
 
 with open('config.json', 'r') as f:
     data = json.load(f)

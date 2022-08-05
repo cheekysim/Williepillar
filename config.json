@@ -7,11 +7,8 @@
       "general": "working",
       "greetings": "working",
       "cogs": "working",
-      "test": "working",
       "music": "working",
       "games": "working",
-      "tic tac toe": "working",
-      "tictactoe": "working",
       "admin": "working"
     }
   ]
