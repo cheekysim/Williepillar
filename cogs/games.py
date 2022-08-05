@@ -116,93 +116,9 @@ class Games(commands.Cog):
                         self.add_item(bR)
                         await interaction.response.edit_message(view=self,embed=embed)
                     for char in OX:
-                        if b1.label == char and b2.label == char and b3.label == char:
+                        if (b1.label == char and b2.label == char and b3.label == char) or(b4.label == char and b5.label == char and b6.label == char) or(b7.label == char and b8.label == char and b9.label == char) or (b1.label == char and b4.label == char and b7.label == char) or(b2.label == char and b5.label == char and b8.label == char) or (b3.label == char and b6.label == char and b9.label == char) or (b1.label == char and b5.label == char and b9.label == char) or(b3.label == char and b5.label == char and b7.label == char):
                             if char == "O":
                                 global score2,score1
-                                embed.title = f"{player2} Is The Winner!"
-                                score2 += 1
-                                embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
-                            else:
-                                embed.title = f"{player1} Is The Winner!"
-                                score1 += 1
-                                embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
-                            winState = True
-                            for l in range(9):
-                                bList[l].disabled
-                        elif b4.label == char and b5.label == char and b6.label == char:
-                            if char == "O":
-                                embed.title = f"{player2} Is The Winner!"
-                                score2 += 1
-                                embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
-                            else:
-                                embed.title = f"{player1} Is The Winner!"
-                                score1 += 1
-                                embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
-                            winState = True
-                            for l in range(9):
-                                bList[l].disabled
-                        elif b7.label == char and b8.label == char and b9.label == char:
-                            if char == "O":
-                                embed.title = f"{player2} Is The Winner!"
-                                score2 += 1
-                                embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
-                            else:
-                                embed.title = f"{player1} Is The Winner!"
-                                score1 += 1
-                                embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
-                            winState = True
-                            for l in range(9):
-                                bList[l].disabled
-                        elif b1.label == char and b4.label == char and b7.label == char:
-                            if char == "O":
-                                embed.title = f"{player2} Is The Winner!"
-                                score2 += 1
-                                embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
-                            else:
-                                embed.title = f"{player1} Is The Winner!"
-                                score1 += 1
-                                embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
-                            winState = True
-                            for l in range(9):
-                                bList[l].disabled
-                        elif b2.label == char and b5.label == char and b8.label == char:
-                            if char == "O":
-                                embed.title = f"{player2} Is The Winner!"
-                                score2 += 1
-                                embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
-                            else:
-                                embed.title = f"{player1} Is The Winner!"
-                                score1 += 1
-                                embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
-                            winState = True
-                            for l in range(9):
-                                bList[l].disabled
-                        elif b3.label == char and b6.label == char and b9.label == char:
-                            if char == "O":
-                                embed.title = f"{player2} Is The Winner!"
-                                score2 += 1
-                                embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
-                            else:
-                                embed.title = f"{player1} Is The Winner!"
-                                score1 += 1
-                                embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
-                            winState = True
-                            for l in range(9):
-                                bList[l].disabled
-                        elif b1.label == char and b5.label == char and b9.label == char:
-                            if char == "O":
-                                embed.title = f"{player2} Is The Winner!"
-                                score2 += 1
-                                embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
-                            else:
-                                embed.title = f"{player1} Is The Winner!"
-                                score1 += 1
-                                embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
-                            winState = True
-                            for l in range(9):
-                                bList[l].disabled
-                        elif b3.label == char and b5.label == char and b7.label == char:
-                            if char == "O":
                                 embed.title = f"{player2} Is The Winner!"
                                 score2 += 1
                                 embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
