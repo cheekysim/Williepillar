@@ -26,11 +26,7 @@ class General(commands.Cog, View):
     async def server(self, ctx):
         s = ctx.guild
         date = s.created_at
-        bots = 0
-        for i in s.members:
-            print(i)
-            if i.bot:
-                bots += 1
+        bots = len([i for i in s.members if i.bot])
         await ctx.respond(
             embed=embed(ctx, title="Server Information:", thumbnail=s.icon, author=[{'name': s.name, 'icon': s.icon}],
                         fields=[
