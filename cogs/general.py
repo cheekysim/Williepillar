@@ -42,7 +42,7 @@ class General(commands.Cog, View):
                             {'name': 'Members', 'value': s.member_count, 'inline': True},
                             {'name': 'Humans', 'value': s.member_count - bots, 'inline': True},
                             {'name': 'Bots', 'value': bots, 'inline': True},
-                            {'name': 'Verifiction', 'value': s.verification_level, 'inline': True},
+                            {'name': 'Verification', 'value': s.verification_level, 'inline': True},
                             {'name': 'Created',
                              'value': f'{date.day}/{date.month}/{date.year} {date.hour}:{date.minute}:{date.second}',
                              'inline': True}

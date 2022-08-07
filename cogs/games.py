@@ -66,7 +66,7 @@ class Games(commands.Cog):
                 b7 = Button(label="*", style=discord.ButtonStyle.gray, row=2, custom_id="6")
                 b8 = Button(label="*", style=discord.ButtonStyle.gray, row=2, custom_id="7")
                 b9 = Button(label="*", style=discord.ButtonStyle.gray, row=2, custom_id="8")
-                bR = Button(label="Reamtch 0/2", style=discord.ButtonStyle.green, row=3)
+                bR = Button(label="Rematch 0/2", style=discord.ButtonStyle.green, row=3)
 
                 async def rematch(interaction):
                     global p
