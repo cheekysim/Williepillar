@@ -1,11 +1,12 @@
-import discord
-from discord.ext import commands
-from discord.commands import slash_command, Option
 import json
+
+from discord.commands import slash_command
+from discord.ext import commands
 
 with open('config.json') as f:
     data = json.load(f)
     guild_ids = data["guilds"]
+
 
 class Greetings(commands.Cog):
     def __init__(self, bot):
@@ -24,6 +25,7 @@ class Greetings(commands.Cog):
     @slash_command(name="goodbye", description="Says Goodbye", guild_ids=[703637471212077096])
     async def goodbye(self, ctx):
         await ctx.respond(f"Goodbye {ctx.author.name}!")
+
 
 def setup(bot):
     bot.add_cog(Greetings(bot))

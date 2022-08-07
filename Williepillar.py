@@ -1,7 +1,8 @@
-import discord
-from discord.ext import commands
 import json
 import os
+
+import discord
+from discord.ext import commands
 
 intents = discord.Intents.default()
 intents.members = True
@@ -29,6 +30,7 @@ with open('token.json') as f:
     data = json.load(f)
     token = data["token"]
     print("Loaded Token")
+
 
 @bot.event
 async def on_ready():
