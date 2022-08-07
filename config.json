@@ -9,7 +9,9 @@
       "cogs": "working",
       "music": "working",
       "games": "working",
-      "admin": "working"
+      "admin": "working",
+      "eval": "working",
+      "exec": "working"
     }
   ]
 }

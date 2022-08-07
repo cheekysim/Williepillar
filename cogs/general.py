@@ -9,7 +9,6 @@ from discord.ext import commands
 from discord.ui import View
 
 from modules.embed import embed
-
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 
 
@@ -33,8 +32,7 @@ class General(commands.Cog, View):
                             {'name': 'ID', 'value': s.id, 'inline': True},
                             {'name': 'Server Owner', 'value': s.owner, 'inline': True},
                             {'name': 'Description', 'value': s.description, 'inline': True},
-                            {'name': 'Channels',
-                             'value': f'{len(s.text_channels)} Text | {len(s.voice_channels)} Voice', 'inline': True},
+                            {'name': 'Channels', 'value': f'{len(s.text_channels)} Text | {len(s.voice_channels)} Voice', 'inline': True},
                             {'name': 'Members', 'value': s.member_count, 'inline': True},
                             {'name': 'Humans', 'value': s.member_count - bots, 'inline': True},
                             {'name': 'Bots', 'value': bots, 'inline': True},

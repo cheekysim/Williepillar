@@ -23,6 +23,7 @@ with open('config.json', 'r') as f:
                 print(f"Failed to Load {file[:-3]}")
         else:
             continue
+
     with open('config.json', 'w') as f:
         json.dump(data, f, indent=2)
 
