@@ -2,14 +2,22 @@ import contextlib
 import io
 import json
 import textwrap
+import sys
+import os
+import inspect
 from traceback import format_exception
 
 from discord.commands import slash_command, Option
 from discord.ext import commands
 
+from modules.embed import embed
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
+
 with open('config.json') as f:
     data = json.load(f)
     guilds = data["guilds"]
+    ids = data["ids"]
 
 
 class Exec(commands.Cog):
@@ -17,32 +25,40 @@ class Exec(commands.Cog):
         self.bot = bot
 
     @slash_command(name="exec", description="Allows use of the eval function", guild_ids=[703637471212077096])
-    async def exec(self, ctx, *, code: Option(str, "Enter Code: ", required=True)):
-        str_obj = io.StringIO()
-        code = code.split('\\')
-        code = "\n".join(code)
-        local_variables = {
-            "commands": commands,
-            "bot": self.bot,
-            "ctx": ctx,
-            "channel": ctx.channel,
-            "author": ctx.author,
-            "guild": ctx.guild,
-            "message": ctx.message
-        }
+    async def exec(self, ctx, code: Option(str, "Code To Run", required=True), show_code: Option(bool, "Show Code Inputted", default=False)):
+        if ctx.author.id in ids:
+            str_obj = io.StringIO()
+            code = code.replace(' \\', '\\').replace(' \\ ', '\\').replace('\\ ', '\\')
+            code = code.split('\\')
+            code = "\n".join(code)
+            local_variables = {
+                "commands": commands,
+                "bot": self.bot,
+                "ctx": ctx,
+                "channel": ctx.channel,
+                "author": ctx.author,
+                "guild": ctx.guild,
+                "message": ctx.message
+            }
 
-        try:
-            with contextlib.redirect_stdout(str_obj):
-                exec(
-                    f"async def func():\n{textwrap.indent(code, '   ')}", local_variables
-                )
+            try:
+                with contextlib.redirect_stdout(str_obj):
+                    exec(
+                        f"async def func():\n{textwrap.indent(code, '   ')}", local_variables
+                    )
 
-                obj = await local_variables["func"]()
-                result = f"```py\n{str_obj.getvalue()}\n-- {obj}\n```"
-        except Exception as e:
-            result = f"```py\n{''.join(format_exception(e, e, e.__traceback__))}\n```"
+                    obj = await local_variables["func"]()
+                    if show_code:
+                        result = f"```py\n{code}\n```\n```py\n{str_obj.getvalue()}\n-- {obj}\n```"
+                    else:
+                        result = f"```py\n{str_obj.getvalue()}\n-- {obj}\n```"
 
-        await ctx.respond(f"\n{result}\n")
+            except Exception as e:
+                result = f"```py\n{''.join(format_exception(e, e, e.__traceback__))}\n```"
+
+            await ctx.respond(f"\n{result}\n")
+        else:
+            await ctx.respond(embed=embed(ctx, title="Not Authorised To Use Eval Command"))
 
 
 def setup(bot):
