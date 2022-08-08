@@ -10,28 +10,12 @@ def embed(ctx, **kwargs):
     embed.color = kwargs.get("color", 0x6600ff)
     embed.set_thumbnail(url=(kwargs.get("thumbnail", embed.Empty)))
     embed.set_image(url=(kwargs.get("image", embed.Empty)))
+    embed.set_footer(text=(kwargs.get("footer", [{'text': f'{ctx.bot.user.name} | Requested By: {ctx.author.name}'}])), url=(kwargs.get("footer_url", embed.Empty)))
+
     for field in kwargs.get("author", []):
-        try:
-            embed.set_author(name=field['name'], url=field['url'], icon=field['icon'])
-        except:
-            try:
-                embed.set_author(name=field['name'])
-            except:
-                try:
-                    embed.set_author(name=field['name'], icon=field['icon'])
-                except:
-                    embed.set_author(name=field['name'], url=field['url'])
+        embed.set_author(name=field.get("name", embed.Empty), url=field.get("url", embed.Empty), icon_url=field.get("icon", embed.Empty))
 
     for field in kwargs.get("fields", []):
-        try:
-            embed.add_field(name=field['name'], value=field['value'], inline=field['inline'])
-        except:
-            embed.add_field(name=field['name'], value=field['value'], inline=False)
-
-    for field in kwargs.get("footer", [{'text': f'{ctx.bot.user.name} | Requested By: {ctx.author.name}'}]):
-        try:
-            embed.set_footer(text=field['text'], icon_url=field['icon'])
-        except:
-            embed.set_footer(text=field['text'])
+        embed.add_field(name=field.get("name", embed.Empty), value=field.get("value", embed.Empty), inline=field.get("inline", False))
 
     return embed

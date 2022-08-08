@@ -51,7 +51,7 @@ class Exec(commands.Cog):
                     if show_code:
                         result = f"```py\n{code}\n```\n```\n{str_obj.getvalue()}\n-- {obj}\n```"
                     else:
-                        result = f"```py\n{str_obj.getvalue()}\n-- {obj}\n```"
+                        result = f"```\n{str_obj.getvalue()}\n-- {obj}\n```"
 
             except Exception as e:
                 result = f"```py\n{''.join(format_exception(e, e, e.__traceback__))}\n```"
