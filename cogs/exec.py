@@ -49,7 +49,7 @@ class Exec(commands.Cog):
 
                     obj = await local_variables["func"]()
                     if show_code:
-                        result = f"```py\n{code}\n```\n```py\n{str_obj.getvalue()}\n-- {obj}\n```"
+                        result = f"```py\n{code}\n```\n```\n{str_obj.getvalue()}\n-- {obj}\n```"
                     else:
                         result = f"```py\n{str_obj.getvalue()}\n-- {obj}\n```"
 
