@@ -1,12 +1,19 @@
 import json
 import os
+import sys
+import inspect
 
 from discord.commands import slash_command, Option
 from discord.ext import commands
 
+from modules.embed import embed
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
+
 with open('config.json') as f:
     data = json.load(f)
     guild_ids = data["guilds"]
+    ids = data["ids"]
 
 cogs = []
 for file in os.listdir("cogs"):
@@ -29,7 +36,7 @@ class Cogs(commands.Cog):
         for file in os.listdir("cogs"):
             if file.endswith(".py"):
                 c.append(file[:-3])
-        await ctx.respond("All Cogs:\n" + '\n'.join(c))
+        await ctx.respond(embed=embed(ctx, title="All Cogs:", description='\n'.join(c)))
 
 
 def setup(bot):
