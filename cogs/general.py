@@ -9,8 +9,8 @@ from discord.ext import commands
 from discord.ui import View
 
 from modules.embed import embed
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 
 with open('config.json') as f:
     data = json.load(f)
@@ -50,10 +50,6 @@ class General(commands.Cog, View):
     async def id(self, ctx, user: Option(discord.User, "User", required=False)):
         user = user or ctx.author
         await ctx.respond(embed=embed(ctx, title=f"{user.name}'s id is {user.id}"))
-
-    @slash_command(name="image", guild_ids=[703637471212077096])
-    async def image(self, ctx):
-        await ctx.respond(embed=embed(ctx, type="image", url=ctx.guild.icon))
 
 
 def setup(bot):
