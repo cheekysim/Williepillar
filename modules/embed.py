@@ -10,13 +10,12 @@ def embed(ctx, **kwargs):
     embed.color = kwargs.get("color", 0x6600ff)
     embed.set_thumbnail(url=(kwargs.get("thumbnail", embed.Empty)))
     embed.set_image(url=(kwargs.get("image", embed.Empty)))
+    embed.set_footer(text=(kwargs.get("footer", [{'text': f'{ctx.bot.user.name} | Requested By: {ctx.author.name}'}])), url=(kwargs.get("footer_url", embed.Empty)))
+
     for field in kwargs.get("author", []):
         embed.set_author(name=field.get("name", embed.Empty), url=field.get("url", embed.Empty), icon_url=field.get("icon", embed.Empty))
 
     for field in kwargs.get("fields", []):
         embed.add_field(name=field.get("name", embed.Empty), value=field.get("value", embed.Empty), inline=field.get("inline", False))
-
-    for field in kwargs.get("footer", [{'text': f'{ctx.bot.user.name} | Requested By: {ctx.author.name}'}]):
-        embed.set_footer(text=field.get("text", embed.Empty), icon_url=field.get("icon", embed.Empty))
 
     return embed

@@ -8,7 +8,6 @@ import discord
 from discord import default_permissions
 from discord.commands import slash_command, Option
 from discord.ext import commands
-from discord.ext.commands import MissingPermissions
 
 from modules.embed import embed
 
