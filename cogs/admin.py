@@ -3,15 +3,14 @@ import json
 import os
 import sys
 import asyncio
-
 import discord
 from discord import default_permissions
 from discord.commands import slash_command, Option
 from discord.ext import commands
 
-from modules.embed import embed
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
+from modules.embed import embed
 
 with open('config.json') as f:
     data = json.load(f)
@@ -24,7 +23,7 @@ class Admin(commands.Cog):
 
     @slash_command(name="mute", description="Mutes User", guild_ids=[703637471212077096])
     @default_permissions(mute_members=True)
-    async def mute(self, ctx, user: Option(discord.User, "User", required=True), duration: Option(str, "Duration (s)", default="0"), reason: Option(str, "Reason", default="Muted")):
+    async def mute(self, ctx: commands.Context, user: Option(discord.User, "User", required=True), duration: Option(int, "Duration (s)", default="0"), reason: Option(str, "Reason", default="Muted")):
         prole = False
         for role in ctx.guild.roles:
             if role.name.lower() == "muted":
@@ -36,11 +35,17 @@ class Admin(commands.Cog):
             await ctx.guild.create_role(name="Muted", permissions=discord.Permissions(permissions=2048), color=discord.Color(0x111111))
         role = discord.utils.find(lambda r: r.name == "Muted", ctx.guild.roles)
         await user.add_roles(role, reason=reason)
-        if duration == "0":
-            await ctx.respond(embed=embed(ctx, title=f"Muted {user.name}"))
+        if duration == 0:
+            await ctx.respond(embed=embed(ctx, title=f"Muted {user.name}", footer={"text": reason}))
         else:
-            await ctx.respond(embed=embed(ctx, title=f"Muted {user.name} for {duration} Seconds"))
-            await asyncio.sleep(int(duration))
+            a=embed(ctx, title=f"Muted {user.name} for {(duration)} Seconds",description = f"**Reason | **{reason}", footer=f'{ctx.bot.user.name} | Requested By: {ctx.author.name} | {duration}s')
+            b = await ctx.respond(embed=a)
+            for sec in range(duration):
+                a.set_footer(text = f'{ctx.bot.user.name} | Requested By: {ctx.author.name} | {duration - sec}s')
+                await b.edit_original_message(embed=a)
+                await asyncio.sleep(1)
+            a.set_footer(text=f'{ctx.bot.user.name} | Requested By: {ctx.author.name} | Mute Finished')
+            await b.edit_original_message(embed=a)
             await user.remove_roles(role, reason="Auto Un Mute")
 
     @slash_command(name="unmute", description="Un Mutes User", guild_ids=[703637471212077096])
