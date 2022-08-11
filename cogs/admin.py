@@ -1,3 +1,4 @@
+
 import inspect
 import json
 import os
@@ -57,6 +58,20 @@ class Admin(commands.Cog):
             await ctx.respond(embed=embed(ctx, title=f"Un Muted {user.name}"))
         else:
             await ctx.respond(embed=embed(ctx, title=f"{user.name} is not muted"))
+
+    @slash_command(name="purge", description="Deletes Messages In Bulk", guild_ids=[703637471212077096])
+    @default_permissions(manage_messages=True)
+    async def purge(self, ctx: commands.Context, amount: Option(int, "Amount", required=True, max_value=100)):
+        await ctx.channel.purge(limit=amount)
+        p = await ctx.respond(embed=embed(ctx, title=f"Successfully Purged {amount} Messages"))
+        await asyncio.sleep(5)
+        await p.delete_original_message()
+
+    @slash_command(name="kick", description="Kicks People Out Of The Server")
+    @default_permissions(kick_members=True)
+    async def kick(self, ctx: commands.Context, user: Option(discord.User, "User", required=True), reason: Option(str, "Reason", default="Kicked")):
+        await ctx.respond(embed=embed(ctx, title=f"Kicked {user.name}", description=f"**Reason |** {reason}"))
+        await user.kick()
 
 
 def setup(bot):
