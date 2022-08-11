@@ -23,7 +23,7 @@ class Admin(commands.Cog):
 
     @slash_command(name="mute", description="Mutes User", guild_ids=[703637471212077096])
     @default_permissions(mute_members=True)
-    async def mute(self, ctx: commands.Context, user: Option(discord.User, "User", required=True), duration: Option(int, "Duration (s)", default="0"), reason: Option(str, "Reason", default="Muted")):
+    async def mute(self, ctx: commands.Context, user: Option(discord.User, "User", required=True), reason: Option(str, "Reason", required=True), duration: Option(int, "Duration (s)", default=0)):
         prole = False
         for role in ctx.guild.roles:
             if role.name.lower() == "muted":
@@ -36,7 +36,7 @@ class Admin(commands.Cog):
         role = discord.utils.find(lambda r: r.name == "Muted", ctx.guild.roles)
         await user.add_roles(role, reason=reason)
         if duration == 0:
-            await ctx.respond(embed=embed(ctx, title=f"Muted {user.name}", footer={"text": reason}))
+            await ctx.respond(embed=embed(ctx, title=f"Muted {user.name}", description=f"**Reason | **{reason}"))
         else:
             a = embed(ctx, title=f"Muted {user.name} for {(duration)} Seconds", description=f"**Reason | **{reason}", footer=f'{ctx.bot.user.name} | Requested By: {ctx.author.name} | {duration}s')
             b = await ctx.respond(embed=a)
