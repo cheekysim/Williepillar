@@ -8,14 +8,12 @@
   ],
   "cogs": [
     {
-      "general": "working",
-      "greetings": "working",
-      "cogs": "working",
-      "music": "working",
-      "games": "working",
-      "admin": "working",
-      "eval": "working",
-      "exec": "working"
+      "admin": "enabled",
+      "cogs": "enabled",
+      "games": "enabled",
+      "general": "enabled",
+      "greetings": "enabled",
+      "eval": "enabled"
     }
   ]
 }

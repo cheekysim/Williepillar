@@ -20,12 +20,12 @@ with open('config.json') as f:
     ids = data["ids"]
 
 
-class Exec(commands.Cog):
+class eval(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @slash_command(name="exec", description="Allows use of the eval function", guild_ids=[703637471212077096])
-    async def exec(self, ctx, code: Option(str, "Code To Run", required=True), show_code: Option(bool, "Show Code Inputted", default=False)):
+    @slash_command(name="eval", description="Allows use of the eval function, Use \ for a new line.", guild_ids=[703637471212077096])
+    async def eval(self, ctx, code: Option(str, "Code To Run", required=True), show_code: Option(bool, "Show Code Inputted", default=False)):
         if ctx.author.id in ids:
             str_obj = io.StringIO()
             code = code.replace(' \\', '\\').replace(' \\ ', '\\').replace('\\ ', '\\')
@@ -62,4 +62,4 @@ class Exec(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(Exec(bot))
+    bot.add_cog(eval(bot))
