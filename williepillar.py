@@ -19,23 +19,24 @@ with open('config.json', 'r') as f:
             try:
                 if file not in data["cogs"][0]:
                     data["cogs"][0][file] = "enabled"
-                if data["cogs"][0][file] == "enabled" or data["cogs"][0][file] == "broken":
+                if data["cogs"][0][file] in ["enabled", "broken"]:
                     bot.load_extension(f"cogs.{file}")
                     print(f"Loaded {file}")
                 else:
                     print(f"Did Not Load {file}")
-                
+
             except Exception as e:
                 print(e)
                 data["cogs"][0][file] = "broken"
                 print(f"Failed to Load {file}")
         else:
             continue
-    
-    for i in list(data["cogs"][0]):
-        if i in modules: pass
-        else: data["cogs"][0].pop(i)
 
+    for i in list(data["cogs"][0]):
+        if i in modules:
+            pass
+        else:
+            data["cogs"][0].pop(i)
 
     with open('config.json', 'w') as f:
         json.dump(data, f, indent=2)

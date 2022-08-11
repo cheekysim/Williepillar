@@ -1,3 +1,5 @@
+# This file is old, please ignore it :)
+
 import json
 
 from discord.commands import slash_command

@@ -12,7 +12,7 @@
       "cogs": "enabled",
       "games": "enabled",
       "general": "enabled",
-      "greetings": "enabled",
+      "greetings": "disabled",
       "eval": "enabled"
     }
   ]

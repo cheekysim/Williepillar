@@ -24,8 +24,8 @@ class eval(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @slash_command(name="eval", description="Allows use of the eval function, Use \ for a new line.", guild_ids=[703637471212077096])
-    async def eval(self, ctx, code: Option(str, "Code To Run", required=True), show_code: Option(bool, "Show Code Inputted", default=False)):
+    @slash_command(name="eval", description="Allows use of the eval function, Use \ for a new line.", guild_ids=[703637471212077096]) # noqa
+    async def eval(self, ctx, code: Option(str, "Code To Run", required=True), show_code: Option(bool, "Show Code Inputted", default=False)): # noqa
         if ctx.author.id in ids:
             str_obj = io.StringIO()
             code = code.replace(' \\', '\\').replace(' \\ ', '\\').replace('\\ ', '\\')

@@ -38,10 +38,10 @@ class Admin(commands.Cog):
         if duration == 0:
             await ctx.respond(embed=embed(ctx, title=f"Muted {user.name}", footer={"text": reason}))
         else:
-            a=embed(ctx, title=f"Muted {user.name} for {(duration)} Seconds",description = f"**Reason | **{reason}", footer=f'{ctx.bot.user.name} | Requested By: {ctx.author.name} | {duration}s')
+            a = embed(ctx, title=f"Muted {user.name} for {(duration)} Seconds", description=f"**Reason | **{reason}", footer=f'{ctx.bot.user.name} | Requested By: {ctx.author.name} | {duration}s')
             b = await ctx.respond(embed=a)
             for sec in range(duration):
-                a.set_footer(text = f'{ctx.bot.user.name} | Requested By: {ctx.author.name} | {duration - sec}s')
+                a.set_footer(text=f'{ctx.bot.user.name} | Requested By: {ctx.author.name} | {duration - sec}s')
                 await b.edit_original_message(embed=a)
                 await asyncio.sleep(1)
             a.set_footer(text=f'{ctx.bot.user.name} | Requested By: {ctx.author.name} | Mute Finished')
@@ -57,7 +57,6 @@ class Admin(commands.Cog):
             await ctx.respond(embed=embed(ctx, title=f"Un Muted {user.name}"))
         else:
             await ctx.respond(embed=embed(ctx, title=f"{user.name} is not muted"))
-
 
 
 def setup(bot):
