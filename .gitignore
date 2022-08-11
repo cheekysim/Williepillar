@@ -1,5 +1,4 @@
 token.json
 */__pycache__/*
 __pycache__
-/.flake8
 /.vscode/settings.json
