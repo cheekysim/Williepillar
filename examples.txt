@@ -18,5 +18,31 @@ class classname(View):
     async def button_callback2(self,button, interaction):
         await interaction.response.send_message("insert text here")
 
+default cog file
+--------------------
+import json
+import sys
+import os
+import inspect
+
+import discord
+from discord.commands import slash_command, Option
+from discord.ext import commands
+
+from modules.embed import embed
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
+
+with open('config.json') as f:
+    data = json.load(f)
+    guilds = data["guilds"]
+    ids = data["ids"]
 
 
+class Name(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+
+def setup(bot):
+    bot.add_cog(Name(bot))

@@ -7,6 +7,7 @@ import os
 import inspect
 from traceback import format_exception
 
+import discord
 from discord.commands import slash_command, Option
 from discord.ext import commands
 
@@ -20,12 +21,12 @@ with open('config.json') as f:
     ids = data["ids"]
 
 
-class eval(commands.Cog):
+class Eval(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @slash_command(name="eval", description="Allows use of the eval function, Use \ for a new line.", guild_ids=[703637471212077096]) # noqa
-    async def eval(self, ctx, code: Option(str, "Code To Run", required=True), show_code: Option(bool, "Show Code Inputted", default=False)): # noqa
+    async def eval(self, ctx: discord.ApplicationContext, code: Option(str, "Code To Run", required=True), show_code: Option(bool, "Show Code Inputted", default=False)): # noqa
         if ctx.author.id in ids:
             str_obj = io.StringIO()
             code = code.replace(' \\', '\\').replace(' \\ ', '\\').replace('\\ ', '\\')
@@ -62,4 +63,4 @@ class eval(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(eval(bot))
+    bot.add_cog(Eval(bot))
