@@ -77,10 +77,15 @@ class Quote(commands.Cog):
         line_count = len(final_msg)
         message = "\n".join(final_msg)
         font_size = best_fontsize
+        if line_count == 1:
+            h = (H / 2) + line_count * line_height
+        else:
+            h = (H / 2) + font_size
         font = ImageFont.truetype(font_family, font_size)
-        draw.text((W / 2, (H / 2) + line_count * line_height), f'"{message}"', fill=(255, 255, 255), font=font, anchor="md")
+        draw.text((W / 2, h), f'"{message}"', fill=(255, 255, 255), font=font, anchor="md")
         font = ImageFont.truetype(font_family, quoter_size)
-        draw.text((W * img_fraction * 1.2, (H / 2) + line_count * line_height), f'- {name} {datetime.now().strftime("%d/%m/%Y")}', fill=(255, 255, 255), font=font, anchor="ra")
+        draw.text((W * img_fraction * 1.2, h), f'- {name} {datetime.now().strftime("%d/%m/%Y")}', fill=(255, 255, 255), font=font, anchor="ra")
+        draw.line([(0, H / 2), (W, H / 2)], fill=(255, 255, 255), width=5)
         with io.BytesIO() as image_binary:
             img.save(image_binary, "PNG")
             image_binary.seek(0)

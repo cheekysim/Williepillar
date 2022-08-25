@@ -15,7 +15,8 @@
       "greetings": "disabled",
       "eval": "enabled",
       "errors": "enabled",
-      "quote": "enabled"
+      "quote": "enabled",
+      "graph": "enabled"
     }
   ]
 }
