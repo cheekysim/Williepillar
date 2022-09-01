@@ -100,7 +100,7 @@ class Graph(commands.Cog):
         with io.BytesIO() as image_binary:
             img.save(image_binary, "PNG")
             image_binary.seek(0)
-            await ctx.respond(file=discord.File(fp=image_binary, filename='quote.png'))
+            await ctx.respond(file=discord.File(fp=image_binary, filename='graph.png'))
 
 
 def setup(bot):
