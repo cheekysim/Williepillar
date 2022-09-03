@@ -19,8 +19,8 @@ class Graph(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @slash_command(name="graph", description="Creates a graph of the given equation.", guild_ids=[703637471212077096])
-    async def graph(self, ctx: discord.ApplicationContext, expression: Option(str, "Expression", required=True), steps: Option(int, "Steps", default=4), substeps: Option(int, "SubSteps", default=2), show_points: Option(bool, "Show Points", default=False)): # noqa
+    @slash_command(name="graph", description="Creates a graph of the given equation. For example, x ** 2", guild_ids=[703637471212077096])
+    async def graph(self, ctx: discord.ApplicationContext, expression: Option(str, "Expression. For example, x ** 2", required=True), steps: Option(int, "Steps", default=4), substeps: Option(int, "SubSteps", default=2), show_points: Option(bool, "Show Points", default=False)): # noqa
         W, H = 1080, 1080
         grid_fill = (128, 128, 128)
         points = []

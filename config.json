@@ -16,7 +16,8 @@
       "eval": "enabled",
       "errors": "enabled",
       "quote": "enabled",
-      "graph": "enabled"
+      "graph": "enabled",
+      "gpt-3": "enabled"
     }
   ]
 }
