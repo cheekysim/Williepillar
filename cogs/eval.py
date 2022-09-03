@@ -2,9 +2,6 @@ import contextlib
 import io
 import json
 import textwrap
-import sys
-import os
-import inspect
 from traceback import format_exception
 
 import discord
@@ -12,8 +9,6 @@ from discord.commands import slash_command, Option
 from discord.ext import commands
 
 from modules.embed import embed
-
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 
 with open('config.json') as f:
     data = json.load(f)

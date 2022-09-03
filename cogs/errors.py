@@ -1,12 +1,7 @@
 import json
-import sys
-import os
-import inspect
 
 import discord
 from discord.ext import commands
-
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 
 from modules.embed import embed
 

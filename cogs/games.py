@@ -1,15 +1,11 @@
-import inspect
 import json
-import os
 import random
-import sys
 
 import discord
 from discord.commands import slash_command, Option
 from discord.ext import commands
 from discord.ui import Button, View
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 from modules.embed import embed
 
 with open('config.json') as f:

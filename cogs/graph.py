@@ -1,8 +1,5 @@
 import json
-import sys
-import os
 import math
-import inspect
 from PIL import Image, ImageDraw
 import io
 
@@ -11,8 +8,6 @@ from discord.commands import slash_command, Option
 from discord.ext import commands
 
 from modules.embed import embed
-
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 
 with open('config.json') as f:
     data = json.load(f)
