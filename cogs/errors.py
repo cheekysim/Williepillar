@@ -3,6 +3,8 @@ import json
 import discord
 from discord.ext import commands
 
+import os, sys, inspect
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 from modules.embed import embed
 
 with open('config.json') as f:
