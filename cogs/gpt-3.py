@@ -1,5 +1,6 @@
 import json
 import openai
+from datetime import datetime
 
 import discord # noqa
 from discord.commands import slash_command, Option
@@ -27,7 +28,7 @@ class GPT(commands.Cog):
     async def gpt(self, ctx, prompt: Option(str, "What do you want to ask GPT-3?", required=True)): # noqa
         def generate_prompt(prompt):
             return f"""Q: How are you feeling?
-            A: I am feeling \"\".
+            A: I am feeling good.
             Q: What is your name?
             A: My name is davinici.
             Q: What is human life expectancy in the United States?
@@ -40,14 +41,19 @@ class GPT(commands.Cog):
             A: 5 dollars is 3.75 pounds.
             Q: What is 10 pounds in euros?
             A: 10 pounds is 12.5 euros
+            Q: What day is it today?
+            A: it is {datetime.now().strftime("%A, %B %d, %Y")}.
             Q: {prompt}
             A:"""
         openai.api_key = openapi_key
         response = openai.Completion.create(
-            model="text-davinci-002",
+            model="text-curie-001",
             prompt=generate_prompt(prompt),
             temperature=1,
-            max_tokens=100
+            max_tokens=100,
+            top_p=1,
+            frequency_penalty=0.0,
+            presence_penalty=2.0
         )
 
         await ctx.respond(embed=embed(ctx, title="GPT-3", description=response["choices"][0]["text"]))
