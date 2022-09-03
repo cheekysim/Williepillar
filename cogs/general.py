@@ -1,7 +1,4 @@
-import inspect
 import json
-import os
-import sys
 
 import discord
 from discord.commands import slash_command, Option
@@ -9,8 +6,6 @@ from discord.ext import commands
 from discord.ui import View
 
 from modules.embed import embed
-
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 
 with open('config.json') as f:
     data = json.load(f)
