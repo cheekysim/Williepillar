@@ -9,8 +9,9 @@ from discord.ext import commands
 
 import os, sys, inspect
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
-from modules.embed import embed
+from modules.embed import embed # noqa
 
+# It's loading the config.json file and assigning the values to the variables.
 with open('config.json') as f:
     data = json.load(f)
     guilds = data["guilds"]
@@ -23,6 +24,16 @@ class Quote(commands.Cog):
 
     @slash_command(name="quote", description="Creates a quote of the given message.", guild_ids=[703637471212077096])
     async def quote(self, ctx: discord.ApplicationContext, message: Option(str, "Message", required=True), name: Option(str, "Name", required=True)):
+        """
+        It takes a message and a name, and creates an image with the message and name on it.
+
+        :param ctx: The context of the command
+        :type ctx: discord.ApplicationContext
+        :param message: The message to be quoted
+        :type message: Option(str, "Message", required=True)
+        :param name: The name of the person who said the quote
+        :type name: Option(str, "Name", required=True)
+        """
         W, H = (1920, 1080)
         img = Image.new('RGB', (W, H), color=(0, 0, 0))
         draw = ImageDraw.Draw(img)

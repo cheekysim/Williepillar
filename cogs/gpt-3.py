@@ -10,11 +10,15 @@ import os, sys, inspect
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 from modules.embed import embed
 
+# It's loading the config.json file and setting the guilds and ids variables to the values in the
+# config.json file.
 with open('config.json') as f:
     data = json.load(f)
     guilds = data["guilds"]
     ids = data["ids"]
 
+# It's loading the openapi.json file and setting the openapi_key variable to the value in the
+# openapi.json file.
 with open('openapi.json') as f:
     data = json.load(f)
     openapi_key = data["OPENAI_API_KEY"]

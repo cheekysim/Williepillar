@@ -12,6 +12,7 @@ import os, sys, inspect
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 from modules.embed import embed
 
+# It's loading the config.json file and assigning the values to the variables.
 with open('config.json') as f:
     data = json.load(f)
     guilds = data["guilds"]
@@ -24,6 +25,16 @@ class Eval(commands.Cog):
 
     @slash_command(name="eval", description="Allows use of the eval function, Use \ for a new line.", guild_ids=[703637471212077096]) # noqa
     async def eval(self, ctx: discord.ApplicationContext, code: Option(str, "Code To Run", required=True), show_code: Option(bool, "Show Code Inputted", default=False)): # noqa
+        """
+        It runs python code in an exec function.
+
+        :param ctx: discord.ApplicationContext
+        :type ctx: discord.ApplicationContext
+        :param code: The code to run
+        :type code: Option(str, "Code To Run", required=True)
+        :param show_code: Option(bool, "Show Code Inputted", default=False)
+        :type show_code: Option(bool, "Show Code Inputted", default=False)
+        """
         if ctx.author.id in ids:
             str_obj = io.StringIO()
             code = code.replace(' \\', '\\').replace(' \\ ', '\\').replace('\\ ', '\\')

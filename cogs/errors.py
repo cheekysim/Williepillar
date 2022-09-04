@@ -7,6 +7,7 @@ import os, sys, inspect
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 from modules.embed import embed
 
+# It's loading the config.json file and assigning the values to variables.
 with open('config.json') as f:
     data = json.load(f)
     guilds = data["guilds"]
@@ -14,8 +15,10 @@ with open('config.json') as f:
     errors = data["errors"][0]
 
 
+# It's ignoring the errors that are in the list.
 ignore = [commands.CommandNotFound, commands.TooManyArguments]
 
+# It's a dictionary that contains the error messages that will be sent to the user.
 error_response = {
     commands.NoPrivateMessage: "This command doesn't work in private messges!",
     commands.MissingPermissions: "You are missing the **{e.missing_perms[0]}** permissions to do this!",
@@ -34,6 +37,16 @@ class Errors(commands.Cog):
 
     @commands.Cog.listener()
     async def on_application_command_error(self, ctx: discord.ApplicationContext, error: discord.DiscordException):
+        """
+        If the error is in the ignore list, ignore it. If the error is in the error_response list, send the
+        error message. If the error is not in the error_response list, raise the error.
+
+        :param ctx: The context of the command
+        :type ctx: discord.ApplicationContext
+        :param error: The error that was raised
+        :type error: discord.DiscordException
+        :return: The error message is being returned.
+        """
         if error.__class__ in ignore:
             return
         for e in error_response:

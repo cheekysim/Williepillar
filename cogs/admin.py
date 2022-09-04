@@ -11,12 +11,21 @@ import os, sys, inspect
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 from modules.embed import embed
 
+# It's loading the config.json file and setting the guilds variable to the guilds key in the
+# config.json file.
 with open('config.json') as f:
     data = json.load(f)
     guilds = data["guilds"]
 
 
 async def durationConverter(args):
+    """
+    It takes a string, checks if it's a valid duration, and returns a list of the amount, unit, and
+    multiplier
+
+    :param args: The arguments passed to the command
+    :return: [int(amount), unit, multiplier]
+    """
     amount = args[:-1]
     unit = args[-1]
     multiplier = {'s': 1, 'm': 60, 'h': 3600}
@@ -28,6 +37,13 @@ async def durationConverter(args):
 
 
 async def timeConverter(args: int):
+    """
+    It converts seconds to a human readable format
+
+    :param args: int = The time in seconds
+    :type args: int
+    :return: The time in seconds, minutes, or hours.
+    """
     if args >= 3600:
         ftime = time.strftime('%Hh %Mm %Ss', time.gmtime(args)).replace(' 0', ' ')
     elif args >= 60:
@@ -44,6 +60,18 @@ class Admin(commands.Cog):
     @slash_command(name="mute", description="Mutes User", guild_ids=[703637471212077096])
     @default_permissions(moderate_members=True)
     async def mute(self, ctx: discord.ApplicationContext, user: Option(discord.User, "User", required=True), reason: Option(str, "Reason", required=True), duration: Option(str, "Duration", default="0")):
+        """
+        It mutes a user for a specified amount of time.
+
+        :param ctx: discord.ApplicationContext
+        :type ctx: discord.ApplicationContext
+        :param user: Option(discord.User, "User", required=True)
+        :type user: Option(discord.User, "User", required=True)
+        :param reason: Option(str, "Reason", required=True)
+        :type reason: Option(str, "Reason", required=True)
+        :param duration: Option(str, "Duration", default="0")
+        :type duration: Option(str, "Duration", default="0")
+        """
         prole = False
         for role in ctx.guild.roles:
             if role.name.lower() == "muted":
@@ -75,6 +103,16 @@ class Admin(commands.Cog):
     @slash_command(name="unmute", description="Un Mutes User", guild_ids=[703637471212077096])
     @default_permissions(moderate_members=True)
     async def unmute(self, ctx: discord.ApplicationContext, user: Option(discord.User, "User", required=True), reason: Option(str, "Reason", default="Un-Muted")):
+        """
+        It unmutes a user
+
+        :param ctx: discord.ApplicationContext
+        :type ctx: discord.ApplicationContext
+        :param user: Option(discord.User, "User", required=True)
+        :type user: Option(discord.User, "User", required=True)
+        :param reason: Option(str, "Reason", default="Un-Muted")
+        :type reason: Option(str, "Reason", default="Un-Muted")
+        """
         role = discord.utils.find(lambda r: r.name == "Muted", ctx.guild.roles)
         if role in user.roles:
             await user.remove_roles(role, reason=reason)
@@ -85,6 +123,14 @@ class Admin(commands.Cog):
     @slash_command(name="purge", description="Deletes Messages In Bulk", guild_ids=[703637471212077096])
     @default_permissions(manage_messages=True)
     async def purge(self, ctx: commands.Context, amount: Option(int, "Amount", required=True, max_value=100)):
+        """
+        It purges a specified amount of messages from the channel it was called in
+
+        :param ctx: The context of the command
+        :type ctx: commands.Context
+        :param amount: Option(int, "Amount", required=True, max_value=100)
+        :type amount: Option(int, "Amount", required=True, max_value=100)
+        """
         await ctx.channel.purge(limit=amount)
         p = await ctx.respond(embed=embed(ctx, title=f"Successfully Purged {amount} Messages"))
         await asyncio.sleep(5)
@@ -93,6 +139,16 @@ class Admin(commands.Cog):
     @slash_command(name="kick", description="Kicks People Out Of The Server")
     @default_permissions(kick_members=True)
     async def kick(self, ctx: commands.Context, user: Option(discord.User, "User", required=True), reason: Option(str, "Reason", default="Kicked")):
+        """
+        It kicks a user with a reason.
+
+        :param ctx: commands.Context - The context of the command
+        :type ctx: commands.Context
+        :param user: Option(discord.User, "User", required=True)
+        :type user: Option(discord.User, "User", required=True)
+        :param reason: Option(str, "Reason", default="Kicked")
+        :type reason: Option(str, "Reason", default="Kicked")
+        """
         await ctx.respond(embed=embed(ctx, title=f"Kicked {user.name}", description=f"**Reason |** {reason}"))
         await user.kick()
 

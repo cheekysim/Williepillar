@@ -10,6 +10,7 @@ import os, sys, inspect
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 from modules.embed import embed
 
+# It's loading the config.json file and assigning the values to the variables.
 with open('config.json') as f:
     data = json.load(f)
     guilds = data["guilds"]
@@ -104,7 +105,7 @@ class Games(commands.Cog):
                     turn += 1
                     OX = ["X", "O"]
                     global winState
-                    if winState == False:
+                    if winState is False:
                         global flag
                         if flag == 0:
                             button.label = "X"
@@ -140,9 +141,9 @@ class Games(commands.Cog):
                                 score1 += 1
                                 embed.description = f"**{player1}: {score1}  {player2}: {score2}**"
                             winState = True
-                            for l in range(9):
-                                bList[l].disabled
-                    if winState == True:
+                            for i in range(9):
+                                bList[i].disabled
+                    if winState is True:
                         self.add_item(bR)
                         winState = False
                         await interaction.response.edit_message(view=self, embed=embed)
@@ -163,8 +164,7 @@ class Games(commands.Cog):
                         return True
                     elif interaction.user == user and flag == 1:
                         return True
-                    elif (interaction.custom_id == bList[9].custom_id or interaction.custom_id == bList[
-                        10].custom_id) and (interaction.user == ctx.author or interaction.user == user):
+                    elif (interaction.custom_id == bList[9].custom_id or interaction.custom_id == bList[10].custom_id) and (interaction.user == ctx.author or interaction.user == user):
                         return True
                     else:
                         await interaction.response.send_message("It's not your turn.", ephemeral=True)
