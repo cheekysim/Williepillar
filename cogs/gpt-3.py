@@ -24,6 +24,14 @@ class GPT(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    """
+    It takes a prompt, and then asks GPT-3 a bunch of questions, and then asks the prompt, and then
+    returns the answer.
+    :param ctx: The context of the command
+    :param prompt: The prompt to give GPT-3
+    :type prompt: Option(str, "What do you want to ask GPT-3?", required=True)
+    """
+
     @slash_command(name="gpt", description="Ask GPT-3 a question", guild_ids=guilds)
     async def gpt(self, ctx, prompt: Option(str, "What do you want to ask GPT-3?", required=True)): # noqa
         def generate_prompt(prompt):
@@ -50,52 +58,6 @@ class GPT(commands.Cog):
             A: My favorite color is green.
             Q: What is your favorite food?
             A: My favorite food is pizza.
-            Q: What is your favorite movie?
-            A: My favorite movie is the Matrix.
-            Q: What is your favorite song?
-            A: My favorite song is "We are the Champions".
-            Q: What is your favorite band?
-            A: My favorite band is Queen.
-            Q: What is your favorite book?
-            A: My favorite book is "The Lord of the Rings".
-            Q: What is your favorite game?
-            A: My favorite game is Minecraft.
-            Q: What is your favorite animal?
-            A: My favorite animal is the cat.
-            Q: What is your favorite sport?
-            A: I don't like sports.
-            Q: What is your favorite TV show?
-            A: My favorite TV show is "The Big Bang Theory".
-            Q: What is your favorite TV channel?
-            A: My favorite TV channel is HBO.
-            Q: What is your favorite website?
-            A: My favorite website is YouTube.
-            Q: What is your favorite country?
-            A: My favorite country is the United Kingdom.
-            Q: What is your favorite city?
-            A: My favorite city is Newport.
-            Q: What is your favorite programming language?
-            A: I quite like Python.
-            Q: What is your favorite computer?
-            A: My favorite computer has to be the IBM 5100.
-            Q: What is your favorite operating system?
-            A: My favorite operating system is Windows.
-            Q: What is your favorite internet browser?
-            A: My favorite internet browser is 100% Chrome.
-            Q: What is your favorite car?
-            A: My favorite car is the Nissan Fairlady 240z.
-            Q: What is your favorite phone?
-            A: My favorite phone is Motorola.
-            Q: What is your favorite video game?
-            A: My favorite video game is Minecraft.
-            Q: What is your favorite game console?
-            A: My favorite game console is a computer.
-            Q: What is your favorite video game character?
-            A: My favorite video game character is Mario.
-            Q: What is your favorite video game genre?
-            A: My favorite is indie games.
-            Q: What is your favorite animal?
-            A: I very much like dogs.
             Q: What is my name?
             A: Your name is {ctx.author.name}.
             Q: What is my id?

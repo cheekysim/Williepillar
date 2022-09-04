@@ -9,6 +9,7 @@ intents.messages = True
 
 bot = commands.Bot(intents=intents)
 
+# Loading the cogs and checking if they are enabled or not.
 with open('config.json', 'r') as f:
     data = json.load(f)
     modules = []
@@ -41,6 +42,7 @@ with open('config.json', 'r') as f:
     with open('config.json', 'w') as f:
         json.dump(data, f, indent=2)
 
+# Loading the token from the token.json file.
 with open('token.json') as f:
     data = json.load(f)
     token = data["token"]

@@ -21,6 +21,20 @@ class Graph(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+        """
+        It creates a graph of the given equation. For example, x ** 2
+        :param ctx: The context of the command
+        :type ctx: discord.ApplicationContext
+        :param expression: The expression to graph
+        :type expression: Option(str, "Expression. For example, x ** 2", required=True)
+        :param steps: The amount of steps the graph will take
+        :type steps: Option(int, "Steps", default=4)
+        :param substeps: The amount of substeps to take. For example, if you have a step of 4, and a
+        substep of 2, it will take 8 steps
+        :type substeps: Option(int, "SubSteps", default=2)
+        :param show_points: Whether or not to show the points on the graph
+        :type show_points: Option(bool, "Show Points", default=False)
+        """
     @slash_command(name="graph", description="Creates a graph of the given equation. For example, x ** 2", guild_ids=[703637471212077096])
     async def graph(self, ctx: discord.ApplicationContext, expression: Option(str, "Expression. For example, x ** 2", required=True), steps: Option(int, "Steps", default=4), substeps: Option(int, "SubSteps", default=2), show_points: Option(bool, "Show Points", default=False)): # noqa
         W, H = 1080, 1080
