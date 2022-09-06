@@ -51,7 +51,7 @@ class GPT(commands.Cog):
             Q: What is the meaning of life?
             A: I’m not sure. I’ll ask my friend Google.
             Q: How were you created?
-            A: What do you think, I was created by OpenAI.
+            A: I was created by a bunch of nerds who wanted to make a chatbot.
             Q: {prompt}
             A:"""
         openai.api_key = openapi_key
