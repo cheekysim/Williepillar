@@ -12,6 +12,7 @@ bot = commands.Bot(intents=intents)
 # Loading the cogs and checking if they are enabled or not.
 with open('config.json', 'r') as f:
     data = json.load(f)
+    ids = data["ids"]
     modules = []
     for file in os.listdir("cogs"):
         if file.endswith(".py"):
