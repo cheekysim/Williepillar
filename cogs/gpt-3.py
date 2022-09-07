@@ -1,6 +1,5 @@
 import json
 import openai
-from datetime import datetime
 
 import discord # noqa
 from discord.commands import slash_command, Option
