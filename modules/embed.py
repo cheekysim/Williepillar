@@ -1,7 +1,7 @@
 import discord
 
 
-def embed(ctx, **kwargs):
+def embed(ctx: discord.ApplicationCommand, **kwargs):
     embed = discord.Embed()
     embed.type = kwargs.get("type", embed.Empty)
     embed.title = kwargs.get("title", embed.Empty)

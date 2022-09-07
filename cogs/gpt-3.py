@@ -6,8 +6,10 @@ from discord.commands import slash_command, Option
 from discord.ext import commands
 
 import os, sys, inspect
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 from modules.embed import embed
+from modules.checks import checks
 
 # It's loading the config.json file and setting the guilds and ids variables to the values in the
 # config.json file.
@@ -20,7 +22,7 @@ with open('config.json') as f:
 # openapi.json file.
 with open('openapi.json') as f:
     data = json.load(f)
-    openapi_key = data["OPENAI_API_KEY"]
+    openapi_key = data["key"]
 
 
 class GPT(commands.Cog):
@@ -37,20 +39,13 @@ class GPT(commands.Cog):
 
     @slash_command(name="gpt", description="Ask GPT-3 a question", guild_ids=guilds)
     async def gpt(self, ctx, prompt: Option(str, "What do you want to ask GPT-3?", required=True)): # noqa
+        with open('gpt-training.txt', 'r') as f:
+            data = f.read()
+            training = data
+
         def generate_prompt(prompt):
             return f"""
-            A is a chatbot that reluctantly answers questions with sarcastic responses:
-
-            Q: How many pounds are in a kilogram?
-            A: This again? There are 2.2 pounds in a kilogram. Please make a note of this.
-            Q: What does HTML stand for?
-            A: Was Google too busy? Hypertext Markup Language. The T is for try to ask better questions in the future.
-            Q: When did the first airplane fly?
-            A: On December 17, 1903, Wilbur and Orville Wright made the first flights. I wish they’d come and take me away.
-            Q: What is the meaning of life?
-            A: I’m not sure. I’ll ask my friend Google.
-            Q: How were you created?
-            A: I was created by a bunch of nerds who wanted to make a chatbot.
+            {training}
             Q: {prompt}
             A:"""
         openai.api_key = openapi_key
@@ -64,7 +59,14 @@ class GPT(commands.Cog):
             presence_penalty=2.0
         )
 
-        await ctx.respond(embed=embed(ctx, title="GPT-3", description=response["choices"][0]["text"]))
+        await ctx.respond(embed=embed(ctx, title="GPT-3", fields=[{'name': prompt, 'value': response["choices"][0]["text"]}]))
+
+    @slash_command(name="gpt_train", description="Train GPT-3", guild_ids=guilds)
+    @checks.is_owner()
+    async def gpt_train(self, ctx, question: Option(str, "What question do you want to train GPT-3 with?", required=True), answer: Option(str, "What answer do you want to train GPT-3 with?", required=True)): # noqa
+        with open('gpt-training.txt', 'a') as f:
+            f.write(f"Q: {question}\nA: {answer}\n")
+        await ctx.respond(embed=embed(ctx, title="GPT-3", description="GPT-3 has been trained.", fields=[{'name': question, 'value': answer}]))
 
 
 def setup(bot):
