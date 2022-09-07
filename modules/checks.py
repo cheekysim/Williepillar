@@ -11,7 +11,8 @@ class checks():
     def __init__(self):
         self = self
 
-    def is_owner():        async def predicate(ctx):
+    def is_owner():        
+        async def predicate(ctx):
             if ctx.author.id in ids:
                 return True
             raise commands.CheckFailure
