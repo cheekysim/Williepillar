@@ -17,7 +17,8 @@
       "errors": "enabled",
       "quote": "enabled",
       "graph": "enabled",
-      "gpt-3": "enabled"
+      "gpt-3": "enabled",
+      "blackjack": "disabled"
     }
   ]
 }
