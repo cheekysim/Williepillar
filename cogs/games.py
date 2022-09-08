@@ -176,7 +176,7 @@ class Games(commands.Cog):
     @slash_command(name="8ball", description="A game of 8ball", guild_ids=[703637471212077096])
     async def ball(self, ctx, question):
         rnd = random.choice(["yes", "no", "maybe", "probably"])
-        await ctx.respond(embed=embed(self, ctx, title=f"**A: {rnd}**", description=f"**Q: {question}**"))
+        await ctx.respond(embed=embed(ctx, title=f"**A: {rnd}**", description=f"**Q: {question}**"))
 
 
 def setup(bot):
