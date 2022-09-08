@@ -26,7 +26,6 @@ with open('config.json', 'r') as f:
                     print(f"Loaded {file}")
                 else:
                     print(f"Did Not Load {file}")
-
             except Exception as e:
                 print(e)
                 data["cogs"][0][file] = "broken"
