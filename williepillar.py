@@ -52,7 +52,7 @@ with open('token.json') as f:
 @bot.event
 async def on_ready():
     print("Williepillar Online")
-    await bot.change_presence(activity=discord.Game(name="Nothing"))
+    await bot.change_presence(activity=discord.Game(name="With ur mum ;)"))
 
 
 bot.run(token)

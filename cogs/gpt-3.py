@@ -18,11 +18,11 @@ with open('config.json') as f:
     guilds = data["guilds"]
     ids = data["ids"]
 
-# It's loading the openapi.json file and setting the openapi_key variable to the value in the
+# It's loading the openapi.json file and setting the openai_key variable to the value in the
 # openapi.json file.
-with open('openapi.json') as f:
+with open('openai.json') as f:
     data = json.load(f)
-    openapi_key = data["key"]
+    openai_key = data["key"]
 
 
 class GPT(commands.Cog):
@@ -47,17 +47,18 @@ class GPT(commands.Cog):
             {training}
             Q: {prompt}
             A:"""
-        openai.api_key = openapi_key
+        openai.api_key = openai_key
         response = openai.Completion.create(
             model="text-curie-001",
             prompt=generate_prompt(prompt),
             temperature=1,
-            max_tokens=100,
+            max_tokens=1000,
             top_p=1,
             frequency_penalty=0.0,
             presence_penalty=2.0
         )
-
+        with open('output.txt', 'w') as f:
+            f.write(response['choices'][0]['text'])
         await ctx.respond(embed=embed(ctx, title="GPT-3", fields=[{'name': prompt, 'value': response["choices"][0]["text"]}]))
 
     @slash_command(name="gpt_train", description="Train GPT-3", guild_ids=guilds)

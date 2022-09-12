@@ -1,0 +1,9 @@
+ Rapid Application Development (RAD) is a software development methodology that uses an iterative and incremental approach to software development.
+
+The main idea behind RAD is to develop software quickly by using pre-developed components and by reusing existing code. This approach allows for a more rapid development cycle, as well as a higher level of flexibility and adaptability.
+
+RAD is a good choice for projects where the requirements are subject to change or are not well understood. It is also good for projects where time to market is a major consideration.
+
+The main disadvantages of RAD are that it can be more expensive than other development methodologies, and it can also result in lower quality software.
+
+Despite its disadvantages, RAD is still a popular choice for many projects, especially those that are time-critical.

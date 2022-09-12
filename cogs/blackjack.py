@@ -49,6 +49,7 @@ class Player:
         self.hand = []
         self.value = 0
         self.aces = 0
+        self.split = False
 
     def draw(self, deck):
         """Adds a card to the player's hand"""
@@ -64,12 +65,27 @@ class Player:
     def get_hand_value(self):
         """Returns the value of the player's hand"""
         self.value = 0
+        self.value2 = 0
         self.aces = 0
-        for card in self.hand:
-            self.value += card.value
-            if card.rank == "Ace":
-                self.aces += 1
-        return self.adjust_for_ace(self.value, self.aces)
+        if self.split:
+            for card in self.hand[0]:
+                self.value += card.value
+                if card.rank == "Ace":
+                    self.aces += 1
+                self.value = self.adjust_for_ace(self.value, self.aces)
+            self.aces = 0
+            for card in self.hand[1]:
+                self.value2 += card.value
+                if card.rank == "Ace":
+                    self.aces += 1
+                self.value2 = self.adjust_for_ace(self.value2, self.aces)
+        else:
+            for card in self.hand:
+                self.value += card.value
+                if card.rank == "Ace":
+                    self.aces += 1
+        self.value = self.adjust_for_ace(self.value, self.aces)
+        return self.value, self.value2
 
     def adjust_for_ace(self, value, aces):
         """Adjusts the value of a player's hand for aces"""
