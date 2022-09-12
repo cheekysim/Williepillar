@@ -32,8 +32,7 @@ class GPT(commands.Cog):
     @slash_command(name="gpt", description="Ask GPT-3 a question", guild_ids=guilds)
     async def gpt(self, ctx, prompt: Option(str, "What do you want to ask GPT-3?", required=True)): # noqa
         """
-        It takes a prompt, and then asks GPT-3 a bunch of questions, and then asks the prompt, and then
-        returns the answer.
+        It takes a prompt, and then asks GPT-3 a bunch of questions, and then asks the prompt, and then returns the answer.
         :param ctx: The context of the command
         :param prompt: The prompt[] to give GPT-3
         :type prompt: Option(str, "What do you want to ask GPT-3?", required=True)
