@@ -35,7 +35,7 @@ class Deck:
 
     def shuffle(self):
         """Shuffles the deck"""
-        random.shuffle(self.cards)
+        return random.shuffle(self.cards)
 
     def draw_card(self):
         """Draws a card from the deck"""
@@ -47,9 +47,10 @@ class Player:
     def __init__(self, name):
         self.name = name
         self.hand = []
-        self.value = 0
-        self.aces = 0
-        self.split = False
+        self.split = 0
+        self.double = False
+        self.bust = False
+        self.stand = False
 
     def draw(self, deck):
         """Adds a card to the player's hand"""
@@ -62,30 +63,24 @@ class Player:
             print(card)
         print(f"Total Value: {self.get_hand_value()}")
 
-    def get_hand_value(self):
+    def can_double(self):
+        if self.get_hand_value(aces=False) in [9, 10, 11]:
+            return True
+        elif self.get_hand_value() in [9, 10, 11]:
+            return True
+
+    def get_hand_value(self, aces=True):
         """Returns the value of the player's hand"""
-        self.value = 0
-        self.value2 = 0
-        self.aces = 0
-        if self.split:
-            for card in self.hand[0]:
-                self.value += card.value
-                if card.rank == "Ace":
-                    self.aces += 1
-                self.value = self.adjust_for_ace(self.value, self.aces)
-            self.aces = 0
-            for card in self.hand[1]:
-                self.value2 += card.value
-                if card.rank == "Ace":
-                    self.aces += 1
-                self.value2 = self.adjust_for_ace(self.value2, self.aces)
+        value = 0
+        aces = 0
+        for card in self.hand:
+            value += card.value
+            if card.rank == "Ace":
+                aces += 1
+        if aces:
+            return self.adjust_for_ace(value, aces)
         else:
-            for card in self.hand:
-                self.value += card.value
-                if card.rank == "Ace":
-                    self.aces += 1
-        self.value = self.adjust_for_ace(self.value, self.aces)
-        return self.value, self.value2
+            return value
 
     def adjust_for_ace(self, value, aces):
         """Adjusts the value of a player's hand for aces"""
@@ -121,52 +116,83 @@ class Game:
     """a game of blackjack"""
     def __init__(self):
         self.deck = Deck()
-        self.player = Player("Player")
         self.dealer = Dealer("Dealer")
+        self.lobby = []
+        self.pile = []
 
     def start(self):
         """starts the game"""
+        self.lobby = [Player(input("What is your name? ")) for i in range(2)]
         self.deck.shuffle()
-        self.player.draw(self.deck)
+        [player.draw(self.deck) for player in self.lobby]
         self.dealer.draw(self.deck)
-        self.player.draw(self.deck)
+        [player.draw(self.deck) for player in self.lobby]
         self.dealer.draw(self.deck)
-        self.show_hands()
         self.play()
 
-    def show_hands(self):
+    def show_hands(self, player):
         """shows the hands of the player and the dealer"""
-        print("\nPlayer's Hand:")
-        self.player.show_hand()
         print("\nDealer's Hand:")
         self.dealer.show_hand()
+        print(f"\n{player.name}'s Hand:")
+        player.show_hand()
 
     def play(self):
         """plays the game"""
-        while True:
-            choice = input("Would you like to hit or stand? ")
-            if choice == "hit":
-                self.player.draw(self.deck)
-                self.show_hands()
-                if self.player.get_hand_value() > 21:
-                    print("You busted!")
-                    break
-            elif choice == "stand":
-                self.dealer.show = True
-                while self.dealer.get_hand_value() < 17:
-                    self.dealer.draw(self.deck)
-                self.show_hands()
-                if self.dealer.get_hand_value() > 21:
-                    print("Dealer busted!")
-                elif self.dealer.get_hand_value() > self.player.get_hand_value():
-                    print("Dealer wins!")
-                elif self.dealer.get_hand_value() < self.player.get_hand_value():
-                    print("Player wins!")
+        while all(not player.bust and not player.stand for player in self.lobby):
+            for player in (player for player in self.lobby if not player.bust and not player.stand and not player.double):
+                print(self.show_hands(player))
+                if player.get_hand_value in [9, 10, 11] and player.double is False:
+                    choice = input("Would you like to, Hit ( H ), Stand ( S ) or Double Down ( D )?")
+                    if choice.lower() == "d":
+                        player.draw(self.deck)
+                        player.double = True
+                elif player.hand[0] == player.hand[1] and player.split == 0:
+                    choice = input("Would you like to, Hit ( H ), Stand ( S ) or Split ( P )?")
+                    if choice.lower() == "p":
+                        # seperate cards into new players (p1, p2)
+                        # set p1 to split = 1
+                        # set p2 to split = 2
+                        player.split = 1
                 else:
-                    print("It's a tie!")
-                break
+                    choice = input("Would you like to, Hit ( H ) or Stand ( S )?")
+                if choice.lower() == "h":
+                    print("You chose to hit.")
+                    player.draw(self.deck)
+                    print(f"You drew: {str(player.hand[-1])}\n")
+                    if player.get_hand_value() > 21:
+                        player.bust = True
+                        print("You Busted!\n")
+                if choice.lower() == "s":
+                    print("You chose to stand.\n")
+                    player.stand = True
+        self.dealer.show = True
+        print("\nDealers Hand")
+        print(self.dealer.show_hand())
+        if self.dealer.get_hand_value(aces=False) < 17:
+            self.dealer.draw(self.deck)
+            print(f"Dealer draws a {str(self.dealer.hand[-1])}")
+            print(f"Dealer's hand is now {self.dealer.get_hand_value(aces=False)}")
+        while self.dealer.get_hand_value() < 17:
+            self.dealer.draw(self.deck)
+            print(f"Dealer draws a {str(self.dealer.hand[-1])}\n")
+            print("Dealers Hand")
+            print(self.dealer.show_hand())
+        if self.dealer.get_hand_value() > 21:
+            print("Dealers Hand")
+            print(self.dealer.show_hand())
+            print("Dealer Busted!\n")
+        else:
+            print("Dealer Stands.\n")
+            print("Dealers Hand")
+            print(self.dealer.show_hand())
+        for player in self.lobby:
+            if player.bust:
+                print(f"{player.name} busted!\n")
+            elif player.get_hand_value() > self.dealer.get_hand_value():
+                print(f"{player.name} wins!\n")
             else:
-                print("Please enter a valid choice.")
+                print(f"{player.name} loses!\n")
 
     def replay(self):
         """asks the player if they want to play again"""
@@ -181,4 +207,3 @@ class Game:
 
 game = Game()
 game.start()
-game.replay()

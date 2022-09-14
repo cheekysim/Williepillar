@@ -41,7 +41,7 @@ class Quote(commands.Cog):
         img_fraction = 0.7
         quoter_size = 72
         line_height = 40
-        font_family = "arial.ttf"
+        font_family = "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf"
         font = ImageFont.truetype(font_family, 1)
 
         def get_text_size(text, image, font):

@@ -9,7 +9,6 @@ import os, sys, inspect
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))))
 from modules.embed import embed
-from modules.checks import checks
 
 # It's loading the config.json file and setting the guilds and ids variables to the values in the
 # config.json file.
@@ -26,7 +25,7 @@ with open('openai.json') as f:
 
 
 class GPT(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot):    
         self.bot = bot
 
     @slash_command(name="gpt", description="Ask GPT-3 a question", guild_ids=guilds)
@@ -37,35 +36,39 @@ class GPT(commands.Cog):
         :param prompt: The prompt to give GPT-3
         :type prompt: Option(str, "What do you want to ask GPT-3?", required=True)
         """
-        with open('gpt-training.txt', 'r') as f:
-            data = f.read()
-            training = data
-
-        def generate_prompt(prompt):
-            return f"""
-            {training}
-            Q: {prompt}
-            A:"""
+        import json
+        with open('gpt/main.json', 'r') as f:
+            data = json.load(f)
+            training = data["data"]
+        try:
+            with open(f'gpt/{ctx.author.id}.json', 'r') as f:
+                data = json.load(f)
+                user_training = data["data"][-4:]
+                modified_user_training = data["data"][-4:]
+                i = 0
+                while len(modified_user_training) < 5:
+                    modified_user_training.insert(0, training[i])
+                    i += 1
+                final_training = "\n".join([f"Human: {i[0]}\nAI: {i[1]}" for i in modified_user_training])
+        except FileNotFoundError:
+            user_training = []
+            final_training = "\n".join([f"Human: {i[0]}\nAI: {i[1]}" for i in training])
         openai.api_key = openai_key
         response = openai.Completion.create(
             model="text-curie-001",
-            prompt=generate_prompt(prompt),
-            temperature=1,
-            max_tokens=1000,
+            prompt=f"The following is a conversation with an AI assistant. The assistant is very very very sarcastic and reluctant to answer questions.\n\n{final_training}\nHuman:{prompt}\nAI:",
+            temperature=0.8,
+            max_tokens=75,
             top_p=1,
-            frequency_penalty=0.0,
-            presence_penalty=2.0
+            frequency_penalty=0,
+            presence_penalty=0.7,
+            stop=[" Human:", " AI:"]
         )
-        with open('output.txt', 'w') as f:
-            f.write(response['choices'][0]['text'])
-        await ctx.respond(embed=embed(ctx, title="GPT-3", fields=[{'name': prompt, 'value': response["choices"][0]["text"]}]))
-
-    @slash_command(name="gpt_train", description="Train GPT-3", guild_ids=guilds)
-    @checks.is_owner()
-    async def gpt_train(self, ctx, question: Option(str, "What question do you want to train GPT-3 with?", required=True), answer: Option(str, "What answer do you want to train GPT-3 with?", required=True)): # noqa
-        with open('gpt-training.txt', 'a') as f:
-            f.write(f"Q: {question}\nA: {answer}\n")
-        await ctx.respond(embed=embed(ctx, title="GPT-3", description="GPT-3 has been trained.", fields=[{'name': question, 'value': answer}]))
+        user_training.append([prompt, response.choices[0].text.replace('\n\n', '').lstrip()])
+        data = {"data": user_training}
+        with open(f"gpt/{ctx.author.id}.json", "w") as f:
+            json.dump(data, f, indent=4)
+        await ctx.respond(embed=embed(ctx, title="GPT-3", fields=[{'name': prompt, 'value': response.choices[0].text}]))
 
 
 def setup(bot):
