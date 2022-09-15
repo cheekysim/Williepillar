@@ -43,10 +43,10 @@ class GPT(commands.Cog):
         try:
             with open(f'gpt/{ctx.author.id}.json', 'r') as f:
                 data = json.load(f)
-                user_training = data["data"][-4:]
-                modified_user_training = data["data"][-4:]
+                user_training = data["data"][-2:]
+                modified_user_training = data["data"][-2:]
                 i = 0
-                while len(modified_user_training) < 5:
+                while len(modified_user_training) < 6:
                     modified_user_training.insert(0, training[i])
                     i += 1
                 final_training = "\n".join([f"Human: {i[0]}\nAI: {i[1]}" for i in modified_user_training])
@@ -56,12 +56,12 @@ class GPT(commands.Cog):
         openai.api_key = openai_key
         response = openai.Completion.create(
             model="text-curie-001",
-            prompt=f"The following is a conversation with an AI assistant. The assistant is very very very sarcastic and reluctant to answer questions.\n\n{final_training}\nHuman:{prompt}\nAI:",
-            temperature=0.8,
+            prompt=f"AI is a chatbot that reluctantly answers questions sarcastically\n\n{final_training}\nHuman:{prompt}\nAI:",
+            temperature=0.7,
             max_tokens=75,
             top_p=1,
-            frequency_penalty=0,
-            presence_penalty=0.7,
+            frequency_penalty=1,
+            presence_penalty=0.6,
             stop=[" Human:", " AI:"]
         )
         user_training.append([prompt, response.choices[0].text.replace('\n\n', '').lstrip()])

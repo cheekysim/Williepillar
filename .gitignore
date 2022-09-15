@@ -3,5 +3,5 @@ token.json
 __pycache__
 /.vscode/settings.json
 /.venv
-/openapi.json
 nohup.out
+openai.json
