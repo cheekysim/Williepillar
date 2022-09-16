@@ -5,3 +5,5 @@ __pycache__
 /.venv
 nohup.out
 openai.json
+gpt/
+/gpt/main.json
