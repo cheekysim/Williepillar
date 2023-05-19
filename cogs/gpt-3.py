@@ -37,14 +37,14 @@ class GPT(commands.Cog):
         :type prompt: Option(str, "What do you want to ask GPT-3?", required=True)
         """
         import json
-        with open('gpt/main.json', 'r') as f:
+        with open('gpt-main.json', 'r') as f:
             data = json.load(f)
             training = data["data"]
         try:
-            with open(f'gpt/{ctx.author.id}.json', 'r') as f:
+            with open(f'gpt-users/{ctx.author.id}.json', 'r') as f:
                 data = json.load(f)
-                user_training = data["data"][-2:]
-                modified_user_training = data["data"][-2:]
+                user_training = data["data"][-3:]
+                modified_user_training = data["data"][-3:]
                 i = 0
                 while len(modified_user_training) < 6:
                     modified_user_training.insert(0, training[i])
@@ -54,6 +54,7 @@ class GPT(commands.Cog):
             user_training = []
             final_training = "\n".join([f"Human: {i[0]}\nAI: {i[1]}" for i in training])
         openai.api_key = openai_key
+        print(final_training)
         response = openai.Completion.create(
             model="text-curie-001",
             prompt=f"AI is a chatbot that reluctantly answers questions sarcastically\n\n{final_training}\nHuman:{prompt}\nAI:",
@@ -66,7 +67,7 @@ class GPT(commands.Cog):
         )
         user_training.append([prompt, response.choices[0].text.replace('\n\n', '').lstrip()])
         data = {"data": user_training}
-        with open(f"gpt/{ctx.author.id}.json", "w") as f:
+        with open(f"gpt-users/{ctx.author.id}.json", "w") as f:
             json.dump(data, f, indent=4)
         await ctx.respond(embed=embed(ctx, title="GPT-3", fields=[{'name': prompt, 'value': response.choices[0].text}]))
 
